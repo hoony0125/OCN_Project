@@ -1,0 +1,147 @@
+<!-- summernote -->
+<script src="js/summernote/summernote-lite.js"></script>
+<script src="js/summernote/lang/summernote-ko-KR.js"></script>
+
+<link rel="stylesheet" href="css/summernote/summernote-lite.css">
+<style>
+    .WritingHeader {
+        /* position: relative; */
+        margin-top: 10px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #323232;
+        margin-left: 452px;
+        width: 1000px;
+    }
+
+    .WritingContent {
+        /* position: relative; */
+        padding-top: 12px;
+        padding-bottom: 50px;
+        margin-left: 452px;
+    }
+
+
+</style>
+
+<div id="app">
+    <section>
+        <div class="WritingWrap">
+            <div class="WritingHeader">
+                <h2>게시글 작성</h2>
+            </div>
+            <div class="WritingContent">
+                <form id="frm">
+                    <div style="width: 1000px">
+                        <input type="hidden" id="userid" name="userid" size="50px">
+
+                        <input type="hidden" id="nickname" name="nickname" size="50px" readonly="readonly">
+                        <input type="text" class="form-control" name="btitle" size="50px" placeholder="제목을 입력하세요.">
+                        <br>
+                        <textarea id="summernote" class="summernote" name="bcontent"></textarea><br><br>
+                        <table align="center">
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <button type="button" id="btn" class="btn btn-secondary">작성완료</button>
+                                </td>
+                                <td colspan="2" align="center">
+                                    <button type="button" id="canclebtn" class="btn btn-secondary">취소</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+        //여기 아래 부분
+        $('#summernote').summernote({
+            // 에디터 높이
+            height: 500,
+            // 에디터 한글 설정
+            lang: "ko-KR",
+            // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
+            focus: true,
+            placeholder: '내용을 입력하세요',
+            toolbar: [
+                // 글꼴 설정
+                ['fontname', ['fontname']],
+                // 글자 크기 설정
+                ['fontsize', ['fontsize']],
+                // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                // 글자색
+                ['color', ['forecolor', 'color']],
+                // 표만들기
+                ['table', ['table']],
+                // 글머리 기호, 번호매기기, 문단정렬
+                ['para', ['ul', 'ol', 'paragraph']],
+                // 줄간격
+                ['height', ['height']],
+                // 그림첨부, 링크만들기, 동영상첨부
+                ['insert', ['picture', 'link', 'video']],
+                // 코드보기, 확대해서보기, 도움말
+                ['view', ['codeview', 'fullscreen', 'help']]
+            ],
+            // 추가한 글꼴
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋음체', '바탕체'],
+            // 추가한 폰트사이즈
+            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72']
+        });
+        $('#summernote').summernote('justifyLeft');
+
+    });
+
+
+
+    login = localStorage.getItem("login");
+    //alert(login);
+    userid = JSON.parse(login).id;
+    nickname = JSON.parse(login).nickname;
+    //alert(userid);
+    $("#userid").val(userid);
+    $("#nickname").val(nickname);
+
+    $("#btn").click(function() {
+
+        $.ajax({
+            url: "http://localhost:3000/bbs/bbswrite",
+            type: "get",
+            data: $("#frm").serialize(),
+            success: function(resp) {
+                //	alert('success');
+
+                if (resp == "OK") {
+                //    alert('추가되었습니다');
+                    Swal.fire({
+                 		icon: 'success',
+                    	title: '추가되었습니다'
+                	});
+                } else {
+                //    alert('추가되지 않았습니다');
+                    Swal.fire({
+                 		icon: 'error',
+                    	title: '추가되지 않았습니다'
+                	});
+                }
+                bbsbtn();
+            },
+            error: function() {
+                alert('error');
+            }
+        });
+    });
+
+    $("#canclebtn").click(function() {
+
+        $.ajax({
+            url: "bbs/bbslist.html",
+            success: function(resp) {
+                $("#content").html(resp);
+            }
+        });
+    });
+</script>

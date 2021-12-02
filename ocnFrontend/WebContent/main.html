@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>OverseasCatchNews</title>
+    
+    <!-- bootstrap, css -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/list.css" />
+    <link rel="stylesheet" href="css/tab.css" />
+    <link href="css/chatbox.css" rel="stylesheet" >
+    <link href="css/custom.css" rel="stylesheet">
+    <link href="css/responsive-style.css" rel="stylesheet">
+    <!-- <link href="css/weather-icons.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link href="css/lightbox.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <link rel="stylesheet" type="text/css" href="css/pagination.css" />
+    <!-- 아이콘 -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- 다음 주소api -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- 쿠키설정 -->
+    <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript"></script>
+    <!-- 페이지네이션 -->
+    <script type="text/javascript" src="page/jquery.twbsPagination.min.js"></script>
+	<!-- SweetAlert2 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- 아이콘 불러오는 링크 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- summernote -->
+    <script src="js/summernote/summernote-lite.js"></script>
+    <script src="js/summernote/lang/summernote-ko-KR.js"></script>
+	<link rel="stylesheet" href="css/summernote/summernote-lite.css">
+    <!-- 테더에러 -->
+    <link rel="stylesheet" href="http://www.atlasestateagents.co.uk/css/tether.min.css">
+    <script src="http://www.atlasestateagents.co.uk/javascript/tether.min.js"></script>
+
+    <style type="text/css">
+        .hidden-lg-up {
+            display: none;
+        }
+
+        .navbar-toggleable-md::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .container::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .nnavbar::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+
+
+</head>
+
+
+<body>
+
+    <!-- 로딩 -->
+    <div class="loader loader-bg">
+        <div class="loader-inner ball-pulse-rise">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- 헤더 -->
+    <header>
+        <div class="logo-top" align="center" style="width: 100%; height: 90px; margin-top:2px; margin-bottom:8px;  background-color: rgb(255, 255, 255); color: black;">
+            <!-- navbar-brand의 content 변경 -->
+            <a class="nav-link" href="#" onclick="home()"><img src="img/OCN_logo.png"></a>
+            
+        </div>
+        <div class="top-head left" style="height: 67px;">
+            <div class="container" style="max-width: 1290px;">
+                <div class="row">
+                    <div class="col-md-6 col-lg-4">
+                        <h1 style=" margin-top: 17px; padding-top: 0px;"><span style="color: #fabf02">O</span>verseas <span style="color: #fabf02">C</span>atch <span style="color: #fabf02">N</span>ews</h1>
+
+                    </div>
+
+                    <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down" style="margin-top: 0px;">
+                        <nav class="nav nav-inline" style="justify-content: flex-end;">
+                            <a id="nicknameshow" style="color: white;margin-top: 9px;margin-right: 16px;"></a>
+                            <span id=loginicon class="material-icons" style="margin-right: 0px; margin-left:20px; margin-top: 20px; color: #fabf02">login</span><a href="login.html" class="nav-link" id="loginbtn" style="padding-left: 5px;">Login</a>
+                            <span id=regiicon class="material-icons" style="margin-right: 0px; margin-left:20px; margin-top: 20px; color: #fabf02">person_add</span><a href="#" onclick="register()" class="nav-link" id="regibtn" style="padding-left: 5px;">Register</a>
+                            <span id=logouticon class="material-icons" style="margin-right: 0px; margin-left:20px; margin-top: 20px; color: #fabf02">logout</span><a class="nav-link" id="logoutbtn" href="#" onclick="logout()" style="padding-left: 5px;">Logout</a>
+                            <span id=mypageicon class="material-icons" style="margin-right: 0px; margin-left:20px; margin-top: 20px; color: #fabf02">perm_identity</span><a class="nav-link" href="#" id="mypagebtn" onclick="mypagebtn()" style="padding-left: 5px;">Mypage</a>
+                        </nav>
+
+                        <!-- 날짜
+                <nav class="nav nav-inline"><div class="col-lg-4 date-sec hidden-sm-down">
+        <div id="Date" style= "color: white;"></div> -->
+                    </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        </div>
+    </header>
+
+    <!-- 네브바 -->
+    <nav class="nnavbar top-nav">
+        <div class="container" style="max-width: 1250px;">
+            <button class="navbar-toggler hidden-lg-up " type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation"> &#9776; </button>
+            <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2" style="display: block;"> <a class="navbar-brand" href="#">Responsive navbar</a>
+                <ul class="nav nnavbar-nav " style="display: inline-flex;">
+                    <li class="nav-item active"> <a class="nav-link" href="#" onclick="home()">Home <span class="sr-only">(current)</span></a> </li>
+                    <li class="nav-item dropdown"> <a class="nav-link" href="#">Categories</a>
+
+                        <ul class="dropdown-content">
+                            <a class="nav-link" href="#" onclick="categoryarticlecat(0)"><span style="font-size: 11px;">Business</span></a>
+                            <a class="nav-link" href="#" onclick="categoryarticlecat(1)" style="margin-left: 0;"><span style="font-size: 11px;">Science&Tech</span></a>
+                            <a class="nav-link" href="#" onclick="categoryarticlecat(2)" style="margin-left: 0;"><span style="font-size: 11px;">Health</span></a>
+                            <li><a class="nav-link" href="#" onclick="categoryarticlecat(3)"><span style="font-size: 11px;">Sport</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="#" onclick="bbclistbtn()"><img src="img/BBC.png" style="height: 16px;"></a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="#" onclick="cnnlistbtn()"><img src="img/CNN.png" style="height: 16px;"></a> </li>
+                    <li class="nav-item"> <a class="nav-link" href="#" id="bbsbtn" onclick="bbsbtn()">Free Board</a> </li>
+ 
+                </ul>
+                <form class="pull-xs-right" style="float: right;">
+                    <!-- 구글번역기 -->
+                    <!-- <div id="google_translate_element"></div>  
+    		<span class="notranslate"><div id="nicknameshow" style="color: white;"></div></span> &ensp;&ensp;&ensp; -->
+
+                    <!-- 검색 -->
+                    <div class="search">
+                        <input id="search_title" type="text" class="form-control" maxlength="64" placeholder="Search" value="" aria-label="Search" />
+                        <button type="submit" class="btn btn-search" onclick="search()" style="padding-top: 5px;padding-bottom: 5px;"><i class="fa fa-search" style="padding-top: 4.5px;"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 메인콘텐츠 -->
+    <main id="content" style="overflow-x: clip;">
+		<script type="text/javascript"></script>
+    </main>
+<div class="chat_icon">
+		<img src="./img/bubble-chat.png" alt="chat" style="width:60px;">
+	</div>
+	
+	<div class="chatbox_support">
+		<div class="chatbox__header">
+			<div class="chatbox__content--header">
+				<h4 class="chatbox__heading--header">OCN 문의하기</h4>
+				<p class="chatbox__description--header">무엇이든 물어보세요!</p>
+			</div>
+		</div>
+	
+		<div class="chatbox__messages"></div>
+	
+		<div id="myform">
+			<input type="hidden" id="openmsg" value="open"> 
+		</div>
+		
+		<div class="chatbox__footer">
+			<input type="text" id="usermsg" placeholder="message please"> 
+			<input type="button" id="submitmsg" class="chatbox__send--footer" value="send">
+		</div>
+	</div>
+
+    <!--copyright이자 footer 시작-->
+    <footer>
+        <div class="copyright">
+            <div class="container">
+                <div class="col-lg-6 col-md-4" style="max-width: 100%;">
+                    <p>Copyright © 2021 <span style="color: #fabf02">O</span>verseas <span style="color: #fabf02">C</span>atch <span style="color: #fabf02">N</span>ews. All rights reserved.
+
+                        <span style="float: right; font-size: 12px; margin-top: 1px;"><a href="#">OCN</a> &nbsp;/&nbsp;
+                            <a href="https://www.bbc.com/">BBC</a> &nbsp;/&nbsp;
+                            <a href="https://edition.cnn.com/">CNN</a>&nbsp;&nbsp;</span>
+
+                    </p>
+
+                </div>
+                <!-- <div class="col-lg-6 col-md-8">
+            <ul class="bottom_ul">
+        <li><a href="#">OCN</a></li>
+        <li><a href="https://www.bbc.com/">BBC</a></li>
+        <li><a href="https://edition.cnn.com/">CNN</a></li>
+      </ul>
+          </div> -->
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+        // alert("main");
+
+
+        // 자주 변경되지 않는 html
+        /*  document.getElementById("header").innerHTML = '<object type="text/html" data="header.html"></object>';
+         document.getElementById("footer").innerHTML = '<object type="text/html" data="footer.html"></object>'; */
+
+        let login = localStorage.getItem("login");
+
+        if (login != null) {
+            let nickname = JSON.parse(login).nickname;
+            $("#nicknameshow").text(nickname + " 님");
+        }
+
+        let category = sessionStorage.getItem("nowPage")
+
+
+
+
+        nowHView();
+
+        function nowHView() {
+
+            if (login == null) {
+                $("#loginbtn").show();
+                $("#loginicon").show();
+                $("#regibtn").show();
+                $("#regiicon").show();
+                $("#logoutbtn").hide();
+                $("#logouticon").hide();
+                $("#mypagebtn").hide();
+                $("#mypageicon").hide();
+            } else if (login != null) {
+                $("#logoutbtn").show();
+                $("#logouticon").show();
+                $("#loginicon").hide();
+                $("#loginbtn").hide();
+                $("#regibtn").hide();
+                $("#regiicon").hide();
+                $("#mypagebtn").show();
+                $("#mypageicon").show();
+            }
+
+            let h = sessionStorage.getItem("nowPage");
+            /*alert(h); */
+            if (h == null || h == "") { // 처음 들어왔을 때
+                home();
+            } else if (h == "home") {
+                home();
+            } else if (h == "bbs") {
+                bbsbtn();
+            } else if (h == "bbsdetail") {
+                bbsseq = sessionStorage.getItem("bbsseq");
+                //alert("bbsseq" + bbsseq);
+                bbsdetail(bbsseq);
+            } else if (h == "bbswrite") {
+                bbswrite();
+            } else if (h == "mypage") {
+                mypagebtn();
+            } else if (h == "updateuserpage") {
+                updateuserbtn();
+            } else if (h == "bbclistpage") {
+                bbclistbtn();
+            } else if (h == "cnnlistpage") {
+                cnnlistbtn();
+            } else if (h == "businesslist") {
+                businesscat();
+            } else if (h == "techlist") {
+                techcat();
+            } else if (h == "healthlist") {
+                healthcat();
+            } else if (h == "sportlist") {
+                sportcat();
+            } else if (h == "categorylist") {
+                categorylistbtn();
+            } else if (h == "articledetail") {
+                articledetailbtn();
+            } else if (h == "searcharticle") {
+                search();
+            }
+              else if (h == "regi") {
+                register();
+            }
+        }
+
+        //로그아웃
+        function logout() {
+            let logout = localStorage.removeItem("login");
+            let excmypage = sessionStorage.getItem("nowPage");
+
+            if (logout == null) {
+                if (excmypage == "mypage") {
+                    $("#loginbtn").show();
+                    $("#loginicon").show();
+                    $("#regibtn").show();
+                    $("#regiicon").show();
+                    $("#logoutbtn").hide();
+                    $("#logouticon").hide();
+                    $("#mypagebtn").hide();
+                    $("#mypageicon").hide();
+                    $("#nicknameshow").hide();
+                    $("#mynickname").hide();
+                    Swal.fire({
+                   	   icon: 'success',
+                   	   title: '로그아웃 되었습니다.',
+       				})
+                    location.href = "main.html";
+                } else if (excmypage != "mypage") {
+                    $("#loginbtn").show();
+                    $("#loginicon").show();
+                    $("#regibtn").show();
+                    $("#regiicon").show();
+                    $("#logoutbtn").hide();
+                    $("#logouticon").hide();
+                    $("#mypagebtn").hide();
+                    $("#mypageicon").hide();
+                    $("#nicknameshow").hide();
+                    $("#mynickname").hide();
+                    Swal.fire({
+                   	   icon: 'success',
+                   	   title: '로그아웃 되었습니다.',
+       				})
+                }
+            } else {
+                alert("실패");
+            }
+        }
+
+        function home() {
+            $.ajax({
+                url: "home.html",
+                success: function(resp) {
+                    //	alert(resp);		
+                    $("#content").html(resp);
+                }
+            });
+
+            // sess
+            sessionStorage.setItem("nowPage", "home");
+        }
+
+        function register() {
+            $.ajax({
+                url: "regi.html",
+                success: function(resp) {
+                    //	alert(resp);		
+                    $("#content").html(resp);
+                    
+                }        	
+        });
+            sessionStorage.setItem("nowPage", "regi");
+      }
+        
+        function bbclistbtn() {
+            $.ajax({
+                url: "bbc/bbclist.html",
+                success: function(resp) {
+                    //	alert(resp);		
+                    $("#content").html(resp);
+                }
+            });
+
+            // sess
+            sessionStorage.setItem("nowPage", "bbclistpage");
+        }
+
+        function cnnlistbtn() {
+            $.ajax({
+                url: "cnn/cnnlist.html",
+                success: function(resp) {
+                    //	alert(resp);		
+                    $("#content").html(resp);
+                }
+            });
+
+            // sess
+            sessionStorage.setItem("nowPage", "cnnlistpage");
+        }
+
+        function chatbotbtn() {
+            $.ajax({
+                url: "ChatBot.html",
+                success: function(resp) {
+                    //	alert(resp);			
+                    $("#content").html(resp);
+                }
+            });
+
+            // sess
+            //sessionStorage.setItem("nowPage", ""); 
+        }
+
+        function bbsbtn() {
+            $.ajax({
+                url: "bbs/bbslist.html",
+                success: function(resp) {
+                    //	alert(resp);			
+                    $("#content").html(resp);
+                }
+            });
+
+            // sess
+            sessionStorage.setItem("nowPage", "bbs");
+        }
+
+
+        function bbsdetail(seq) {
+            //        	alert(seq);
+            bbsseq = seq;
+            $.ajax({
+                url: "bbs/bbsdetail.html",
+                data: {
+                    "seq": seq
+                },
+                success: function(resp) {
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "bbsdetail");
+            sessionStorage.setItem("bbsseq", bbsseq);
+        }
+
+        function bbswrite() {
+
+            //        	alert('btnclick');		
+            $.ajax({
+                url: "bbs/bbswrite.html",
+                success: function(resp) {
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "bbswrite");
+        }
+
+        $("#bbsupdate").click(function() {
+            //		location.href = "bbsupdate.html?seq=" + seq;	
+
+            $.ajax({
+                url: "bbs/bbsupdate.html",
+                data: {
+                    "seq": bbsseq
+                },
+                success: function(resp) {
+                    $("#content").html(resp);
+                }
+            });
+        });
+
+        function mypagebtn() {
+            $.ajax({
+                url: "mypage.html",
+                success: function(resp) {
+                    //	alert(resp);			
+                    $("#content").html(resp);
+                }
+            });
+
+            // sess
+            sessionStorage.setItem("nowPage", "mypage");
+        }
+
+        function updateuserbtn() {
+            $.ajax({
+                url: "userupdate.html",
+                success: function(resp) {
+                    //	alert(resp);			
+                    $("#content").html(resp);
+                }
+            });
+            // sess
+            sessionStorage.setItem("nowPage", "updateuserpage");
+        }
+
+        // 메인에서 데이터 검색 부분
+        function search() {
+
+            let titleSearch = $("#search_title").val();
+            $.ajax({
+                url: "searcharticle.html",
+                success: function(resp) {
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "searcharticle");
+            sessionStorage.setItem("titleSearch", titleSearch)
+        }
+
+        function categorylistbtn() {
+            $.ajax({
+                url: "categories/categoryarticlelist.html",
+                success: function(resp) {
+
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "categorylist");
+        }
+
+        //detail 이동
+        function articledetailbtn() {
+            $.ajax({
+                url: "articledetail.html",
+                success: function(resp) {
+
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "articledetail");
+        }
+
+        
+
+        $(document).ready(function() {
+        	$('.chat_icon').click(function(event){
+        		$('.chatbox_support').toggleClass('active');
+        	});
+        	
+        	
+
+            $(".chatbox__messages").stop().animate({
+                scrollTop: $(".chatbox__messages")[0].scrollHeight
+            }, 2000);
+
+            if ($("#openmsg").val() != "") {
+
+                // naver 전송
+                $.ajax({
+                    url: "http://localhost:3000/chatbot",
+                    type: "post",
+                    data: {
+                        msg: $("#openmsg").val()
+                    },
+                    success: function(str) {
+                        //	alert('success');
+                        //	alert(str);
+                        //	let json = JSON.parse(str);
+                        //	alert(json.bubbles[0].type);	
+
+                        respProc(str);
+                    },
+                    error: function() {
+                        alert('error');
+                    }
+                });
+
+                $(".chatbox__messages").stop().animate({
+                    scrollTop: $(".chatbox__messages")[0].scrollHeight
+                }, 2000);
+            }
+            
+            
+            $("#usermsg").keydown(function(key){
+        		if(key.keyCode==13){ 
+        			if ($("#usermsg").val() != "") {
+        	        	
+
+        	            $(".chatbox__messages").append(
+        	                "<div align='right'><div class='usermsg'>" +
+        	                $("#usermsg").val() +
+        	                "</div><img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></div><br>");
+
+        	            // naver 전송
+        	            $.ajax({
+        	                url: "http://localhost:3000/chatbot",
+        	                type: "post",
+        	                data: {
+        	                    msg: $("#usermsg").val()
+        	                },
+        	                success: function(str) {
+        	                    //	alert('success');
+        	                    //	alert(str);
+        	                    //	let json = JSON.parse(str);
+        	                    //	alert(json.bubbles[0].type);	
+
+        	                    respProc(str);
+        	                    $("#usermsg").val("");
+        	                },
+        	                error: function() {
+        	                    alert('error');
+        	                }
+        	            });
+
+        	            $(".chatbox__messages").stop().animate({
+        	                scrollTop: $(".chatbox__messages")[0].scrollHeight
+        	            }, 2000);
+        	            
+        			}    
+        		}
+                });
+        			
+        		
+           $("#submitmsg").click(function() { 
+        			if ($("#usermsg").val() != "") {
+                	
+
+                    $(".chatbox__messages").append(
+                        "<div align='right'><div class='usermsg'>" +
+                        $("#usermsg").val() +
+                        "</div><img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></div><br>");
+
+                    // naver 전송
+                    $.ajax({
+                        url: "http://localhost:3000/chatbot",
+                        type: "post",
+                        data: {
+                            msg: $("#usermsg").val()
+                        },
+                        success: function(str) {
+                            //	alert('success');
+                            //	alert(str);
+                            //	let json = JSON.parse(str);
+                            //	alert(json.bubbles[0].type);	
+
+                            respProc(str);
+                            $("#usermsg").val("");
+                        },
+                        error: function() {
+                            alert('error');
+                        }
+                    });
+
+                    $(".chatbox__messages").stop().animate({
+                        scrollTop: $(".chatbox__messages")[0].scrollHeight
+                    }, 2000);
+                    
+        		}    
+               
+        	
+        });
+        });
+
+        function respProc(str) {
+            let json = JSON.parse(str);
+
+            if (json.bubbles[0].type == "text") {
+
+                $(".chatbox__messages").append(
+                    "<div align='left'><img src='./img/chatbot.png' style='width:36px; height:36px'><div class='botmsg'>" +
+                    json.bubbles[0].data.description +
+                    "</div></div><br>");
+
+            } else {
+
+                //alert(json.bubbles[0].data.cover.type);	// image, text(link)
+
+                if (json.bubbles[0].data.cover.type == "image") {
+                    let title = json.bubbles[0].data.cover.title;
+                    let imageUrl = json.bubbles[0].data.cover.data.imageUrl;
+
+                    //	alert(title);
+                    //	alert(imageUrl);
+
+                    let imgTag = "<img src='" + imageUrl + "' width='200' class='img1'/>";
+
+                    $(".chatbox__messages").append(
+                        "<div align='left'><img src='./img/chatbot.png' style='width:36px; height:36px'><div class='botmsg'>" + title +
+                        "<br>" + imgTag + "</div></div><br>");
+                } else { // text -> a tag
+                    let description = json.bubbles[0].data.cover.data.description;
+
+                    let contentTable = json.bubbles[0].data.contentTable;
+                    let urls = "<div align='left'><img src='./img/chatbot.png' style='width:36px; height:36px'><div class='botmsg'>" +
+                        description + "<br>";
+                    $.each(contentTable, function(index, item) {
+                        let title = item[0].data.title;
+                        let url = item[0].data.data.action.data.url;
+                        
+                        let moving_num = 0;
+                        if(title == 'CNN' || title == 'cnn'){
+                        	moving_num = 1;
+                        }else if(title == 'BBC' || title == 'bbc'){
+                        	moving_num = 2;
+                        }else if(title.includes('경제')){
+                        	moving_num = 3;
+                        }else if(title.includes('테크')){
+                        	moving_num = 4;
+                        }else if(title.includes('건강')){
+                        	moving_num = 5;
+                        }else if(title.includes('스포츠')){
+                        	moving_num = 6;
+                        }
+
+                        urls += '<a href="" onclick="movingPage(' + moving_num + ')">' + title + '</a><br>';
+                    });
+                    urls += "</div></div><br>";
+                    $(".chatbox__messages").append(urls);
+
+                }
+            }
+        }
+        	function movingPage(page_num) {
+        		
+        		let url = "ChatBot.html";
+        		if(page_num == 1){
+        			url = "cnn/cnnlist.html";
+        			sessionStorage.setItem("nowPage", "cnnlistpage");
+        		}
+        		else if(page_num == 2){
+        			url = "bbc/bbclist.html";
+        			sessionStorage.setItem("nowPage", "bbclistpage");
+        		}
+        		else if(page_num == 3){
+        			url = "categories/categoryarticlelist.html";
+        			sessionStorage.setItem("category", 0);
+        			sessionStorage.setItem("nowPage", "categorylist");
+        		}
+        		else if(page_num == 4){
+        			url = "categories/categoryarticlelist.html";
+        			sessionStorage.setItem("category", 1);
+        			sessionStorage.setItem("nowPage", "categorylist");
+        		}
+        		else if(page_num == 5){
+        			url = "categories/categoryarticlelist.html";
+        			sessionStorage.setItem("category", 2);
+        			sessionStorage.setItem("nowPage", "categorylist");
+        		}
+        		else if(page_num == 6){
+        			url = "categories/categoryarticlelist.html";
+        			sessionStorage.setItem("category", 3);
+        			sessionStorage.setItem("nowPage", "categorylist");
+        		}
+        		
+        		$.ajax({
+                url: url,
+                success: function(resp) {		
+                    $("#content").html(resp);
+                }
+            });
+        }   
+
+    </script>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/core.js"></script>
+    <!-- <script src="js/lightbox-plus-jquery.min.js"></script>  -->
+
+</body>
+
+</html>

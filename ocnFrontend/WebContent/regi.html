@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<title>Registration</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript"></script>
+
+
+<head>
+
+
+    <style type="text/css">
+        #app {
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        #frm {
+            margin-top: 30px;
+        }
+
+        .btn1 {
+            border: none;
+            outline: none;
+            height: 38px;
+            width: 120px;
+            background-color: black;
+            color: white;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .btn1:hover {
+            background: white;
+            border: 1px solid;
+            color: black;
+        }
+
+        #colid,
+        #colpwd,
+        #colpwd2,
+        #colemail,
+        #colnickname,
+        #coladdress {
+            border-top: 2px solid #000;
+            padding-top: 1px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+
+        #textid,
+        #textpwd,
+        #textpwd2,
+        #textnickname,
+        #textemail,
+        #textaddress {
+            padding-top: 10px;
+        }
+
+        #id,
+        #pwd,
+        #pwd2,
+        #nickname,
+        #email,
+        #sample4_postcode,
+        #sample4_jibunAddress,
+        #sample4_detailAddress,
+        #pwddetail,
+        #nickCheck,
+        #pwdCheck,
+        #emailCheck,
+        #idcheck {
+            margin-left: 20px;
+        }
+
+
+        #rowid,
+        #rowpwd,
+        #rowpwd2,
+        #rownickanme,
+        #rowemail,
+        #rowaddress {
+            border-top: 1px solid #e3e7eb;
+        }
+
+        #pwddetail,
+        #pwdCheck,
+        #idcheck,
+        #emailCheck,
+        #nickCheck {
+            margin-top: 5px;
+        }
+
+        #sample4_jibunAddress,
+        #sample4_detailAddress,
+        #sample4_roadAddress,
+        #sample4_extraAddress,
+        #sample4_extraAddress {
+            margin-top: 5px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <section id="app" style=" margin-top: 0px;">
+    <div class="container">
+        <h1 id="regititle" >회원 가입</h1>
+        <form id="frm">
+            <div class="row" id="rowid">
+                <div class="col-sm-3" id="colid">
+                    <label id="textid">아이디</label>
+                </div>
+                <div class="col-sm-3" id="idcol" style="margin-right:10px; margin-top:10px">
+                    <input type="text" id="id" name="id" placeholder="아이디입력" class="form-control" style="width:300px; ">
+                    <p id="idcheck" style="width: 250px"></p>
+                </div>
+                <button type="button" id="idcheckbtn" class="btn1 dark" style="margin-top:10px; margin-left: 50px;">중복확인</button>
+            </div>
+            <div class="row" id="rowpwd">
+                <div class="col-sm-3" id="colpwd">
+                    <label id="textpwd">비밀번호</label>
+                </div>
+                <div class="col-sm-3" id="pwdcol" style="margin-top:10px">
+                    <input type="password" id="pwd" name="pwd" placeholder="패스워드입력" class="form-control" style="width:300px">
+                    <p id="pwddetail" style="width:400px">
+                        -비밀번호는 영문,숫자,특수문자(!@~#$*)를 포함해 8~20글자로 조합해주세요<br> -동일하거나 연속한
+                        숫자와 문자를 3자 이상 사용할 수 없습니다. (예: 111, 123, aaa, abc)<br> -아이디,
+                        생일, 휴대폰 번호 등과 관련한 숫자는 도용될 수 있으니 사용을 자제해주세요.
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="row" id="rowpwd2">
+                <div class="col-sm-3" id="colpwd2">
+                    <label id="textpwd2" >비밀번호 확인</label>
+                </div>
+                <div class="col-sm-3" id="pwd2col" style="margin-top:10px">
+                    <input type="password" id="pwd2" name="pwd2" placeholder="패스워드입력" class="form-control" style="width:300px">
+                    <div id="pwCheck" style="width: 250px; margin-left: 20px;"></div>
+                    <br>
+                </div>
+            </div>
+            <div class="row" id="rowemail">
+                <div class="col-sm-3" id="colemail">
+                    <label id="textemail">이메일</label>
+                </div>
+                <div class="col-sm-3" id="emailcol" style="margin-right:10px; ">
+                    <input type="email" id="email" name="email" placeholder="name@example.com" class="form-control my-2 p-2" style="width:300px; margin-right:10px">
+                    <div id="emailCheck"></div>
+                </div>
+                <button type="button" id="emailCheckBtn" class="btn1 dark" style="margin-top:8px; margin-left: 50px;">중복확인</button>
+
+            </div>
+            <br>
+
+            <div class="row" id="rownickanme">
+                <div class="col-sm-3" id="colnickname">
+                    <label id="textnickname">닉네임</label>
+                </div>
+                <div class="col-sm-3" id="nicknamecol" class="col" style="margin-right:10px;">
+                    <input type="text" id="nickname" name="nickname" placeholder="닉네임입력" size="20" class="form-control my-2 p-2" style="width:300px">
+                    <div id="nickCheck">
+                    </div>
+                </div>
+
+                <button type="button" id="nickCheckBtn" class="btn1 dark" style="margin-top:8px; margin-left: 50px;">중복확인</button>
+
+            </div>
+            <br>
+            <div class="row" id="rowaddress">
+                <div class="col-sm-3" id="coladdress">
+                    <label for="floatingInput" id="textaddress">주소</label>
+                </div>
+                <div class="col-sm-3" id="addresscol">
+                    <input type="text" id="sample4_postcode" name="address1" placeholder="우편번호" class="form-control my-2 p-2" style="width:300px"> <input type="text" id="sample4_jibunAddress" placeholder="지번주소" class="form-control my-2 p-2" style="width:300px"> <input type="text" id="sample4_detailAddress" name="address3" placeholder="상세주소" class="form-control my-2 p-2" style="width:300px">
+                </div>
+                <div class="col-sm-3">
+                    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기" id="" class="btn1 dark" style="margin-top:7px; margin-bottom:2px; margin-left: 45px;"><br> <input type="text" id="sample4_roadAddress" name="address2" placeholder="도로명주소" class="form-control my-2 p-2" style="width:300px; margin-left: 45px;"> <span id="guide" style="color: #999; display: none"></span>
+                    <input type="text" id="sample4_extraAddress" placeholder="참고항목" class="form-control my-2 p-2" style="width:300px;margin-left: 45px">
+                </div>
+            </div>
+            <br> <br>
+            <div align="right">
+                <button type="button" id="account" class="btn1 dark">회원가입</button>
+            </div>
+        </form>
+        </div>
+    </section>
+    <br>
+    <br>
+    
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("#idcheckbtn").click(function() {
+                //	alert('idcheckbtn');
+
+                // id체크
+					let userid = $("#id").val();
+                $.ajax({
+                    url: "http://localhost:3000/idcheck",
+                    type: "post",
+                    data: {
+                    	id : $("#id").val()
+                    },
+                    success: function(resp) {
+                        //	alert('success');
+                        if (resp.trim() == "OK") {
+                            $("#idcheck").html("사용중인 아이디입니다").css("color", "red");
+                            $("#id").val("");
+                            idcheck = false;
+                        }else if(userid == ""){
+                            $("#idcheck").html("아이디를 입력해주세요").css("color", "red");
+                            $("#id").val("");
+                            idcheck = false;
+                        }
+                        else if(userid.length < 3){
+                            $("#idcheck").html("아이디를 3글자 이상으로 설정해주세요").css("color", "red");
+                            $("#id").val("");
+                            idcheck = false;
+                        }
+                        else if(resp.trim() == "NG") {
+                            $("#idcheck").html("사용할 수 있는 아이디입니다").css("color", "#61a3f5");
+                            idcheck = true;
+                        }
+                    },
+                    error: function() {
+                        alert('error');
+                    }
+                });
+            });
+
+            $("#emailCheckBtn").click(function() {
+            	let email = $("#email").val()
+                $.ajax({
+                    url: "http://localhost:3000/emailcheck",
+                    type: "post",
+                    data: {
+                        email: $("#email").val()
+                    },
+                    success: function(resp) {
+                        if (resp.trim() == "OK") {
+                            $("#email").val("").focus();
+                            $("#emailCheck").html("중복된 이메일 입니다").css("color", "red");
+                            emailCheck = false;
+                        }else if(!email.includes("@" && ".") ) {
+                        	$("#emailCheck").html("올바른 이메일 형태를 기입해주세요.").css("color", "red");
+                        	emailCheck = false;
+                        } 
+                        else if(resp.trim() == "NG") {
+                            $("#emailCheck").html("사용 가능한 이메일 입니다.").css("color", "#61a3f5");
+                            emailCheck = true;
+                        }
+                    },
+                    error: function() {
+                        alert("error");
+                    }
+                });
+            });
+
+            $("#nickCheckBtn").click(function() {
+            	let nickname = $("#nickname").val()
+                $.ajax({
+                    url: "http://localhost:3000/nickcheck",
+                    type: "post",
+                    data: {
+                        nickname: $("#nickname").val()
+                    },
+                    success: function(resp) {
+                    	if(nickname == ""){
+                            $("#nickCheck").html("닉네임을 입력해주세요").css("color", "red");
+                            $("#nickname").val("");
+                            nickCheck = false;
+                    	}else if (resp.trim() == "OK") {
+                            $("#nickname").val("").focus();
+                            $("#nickCheck").html("중복된 닉네임 입니다").css("color", "red");
+                            nickCheck = false;
+                        }else {
+                            $("#nickCheck").html("사용 가능한 닉네임 입니다.").css("color", "#61a3f5");
+                            nickCheck = true;
+                        }
+                    },
+                    error: function() {
+                        alert("error");
+                    }
+                });
+            });
+
+            $("#pwd2").on("propertychange change keyup paste input", () => {
+                let pwd = $("#pwd").val();
+                let pwd2 = $("#pwd2").val()
+    				
+                if (pwd == pwd2) {
+                    $("#pwd2").removeClass("is-invalid")
+                    $("#pwd2").addClass("is-valid")
+                    $("#pwCheck").html("비밀번호가 일치합니다").css("color", "#61a3f5");
+                    pwCheck = true;
+
+                }else {
+	                  $("#pwd2").removeClass("is-valid")
+	                  $("#pwd2").addClass("is-invalid")
+	                  $("#pwCheck").html("비밀번호를 확인해주세요").css("color", "red");
+	                  pwCheck = false;
+                }
+            });
+
+            $("#account").on("click", function() {
+                let email = $("#email").val()
+                let pwd = $("#pwd").val()
+                let pwd2 = $("#pwd2").val()
+                let nickname = $("#nickname").val()
+                let id = $("#id").val()
+                let num = pwd.search(/[0-9]/g);
+ 				let eng = pwd.search(/[a-z]/ig);
+  				let spe = pwd.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
+                // 검사 
+                if (!idcheck || id == "") {
+                    Swal.fire({
+				  		icon: 'error',
+				  		text: '아이디를 확인 해주세요'
+					})
+                    $("#id").focus();
+                }else if (!emailCheck || email == "" ) {
+                    Swal.fire({
+				  		icon: 'error',
+				  		text: '이메일 중복확인을 해주세요'
+					})
+                    $("#email").focus();
+                }
+                else if (!pwCheck) {
+                    Swal.fire({
+				  		icon: 'error',
+				  		text: '패스워드를 확인 해주세요'
+					})
+                    $("#pwd2").focus();
+                }else if(pwd.length < 8 || pwd.length > 20 || pwd2.length < 8 || pwd2.length > 20){
+              	  Swal.fire({
+				  		icon: 'error',
+				  		text: '비밀번호를 8자리 ~ 20자리 이내로 입력해주세요.'
+					})
+              		pwCheck = false;
+	            }else if(pwd.search(/\s/) != -1 || pwd2.search(/\s/) != -1){
+	              	Swal.fire({
+				  		icon: 'error',
+				  		text: '비밀번호를 공백 없이 입력해주세요.'
+					})
+	              	pwCheck = false;
+	            }else if(num < 0 || eng < 0 || spe < 0 ){
+	              	Swal.fire({
+				  		icon: 'error',
+				  		text: '비밀번호를 영문, 숫자, 특수문자를 혼합하여 입력해주세요.'
+					})
+	              	pwCheck = false;
+             	}else if(/(\w)\1\1/.test(pwd)){
+            	  	Swal.fire({
+				  		icon: 'error',
+				  		text: '비밀번호에 같은 문자를 3번 이상 연속해서 사용하실 수 없습니다.'
+					})
+            	  	pwCheck = false; 
+             	}
+             	else if (!nickCheck || nickname == "") {
+                    Swal.fire({
+				  		icon: 'error',
+				  		text: '닉네임 중복확인을 해주세요'
+					})
+                    $("#nickname").focus();
+             	}else {
+                    let params = $("#frm").serialize();
+                    $.ajax({
+                        url: "http://localhost:3000/adduser",
+                        type: "post",
+                        data: params,
+                        success: function(resp) {
+                            //	alert('success');
+                            if (resp == "OK") {
+                                Swal.fire({
+            				  		icon: 'success',
+            				  		text: '가입을 환영합니다.'
+            					}).then((result) => { 
+                               		sessionStorage.setItem("nowPage", "home");
+                                	location.href = "main.html";
+                            	});
+                            } else {
+                                Swal.fire({
+            				  		icon: 'error',
+            				  		text: '가입이 되지 않았습니다.'
+            					})
+                            }
+                        },
+                        error: function() {
+                            alert('error');
+                        }
+                    });
+
+                }
+            });
+        });
+    </script>
+
+    <!-- open api 주소 -->
+    <script>
+        //본 예제에서는 도로명 주소 표기 방식에 대한 법령에 따라, 내려오는 데이터를 조합하여 올바른 주소를 구성하는 방법을 설명합니다.
+        function sample4_execDaumPostcode() {
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    var roadAddr = data.roadAddress; // 도로명 주소 변수
+                    var extraRoadAddr = ''; // 참고 항목 변수
+
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                        extraRoadAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if (data.buildingName !== '' && data.apartment === 'Y') {
+                        extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if (extraRoadAddr !== '') {
+                        extraRoadAddr = ' (' + extraRoadAddr + ')';
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    document.getElementById('sample4_postcode').value = data.zonecode;
+                    document.getElementById("sample4_roadAddress").value = roadAddr;
+                    document.getElementById("sample4_jibunAddress").value = data.jibunAddress;
+
+                    // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
+                    if (roadAddr !== '') {
+                        document.getElementById("sample4_extraAddress").value = extraRoadAddr;
+                    } else {
+                        document.getElementById("sample4_extraAddress").value = '';
+                    }
+
+                    var guideTextBox = document.getElementById("guide");
+                    // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                    if (data.autoRoadAddress) {
+                        var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                        guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                        guideTextBox.style.display = 'block';
+
+                    } else if (data.autoJibunAddress) {
+                        var expJibunAddr = data.autoJibunAddress;
+                        guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                        guideTextBox.style.display = 'block';
+                    } else {
+                        guideTextBox.innerHTML = '';
+                        guideTextBox.style.display = 'none';
+                    }
+                }
+            }).open();
+        }
+    </script>
+</body>
+
+</html>

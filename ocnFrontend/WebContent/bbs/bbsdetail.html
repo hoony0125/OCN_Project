@@ -1,0 +1,591 @@
+<style>
+section {
+font-family: 'Montserrat', sans-serif;
+}
+
+.Detail_header {
+	padding-bottom: 20px;
+	margin: 20px;
+	border-bottom: 1px solid #ebecef;
+}
+
+.Detail_header #btitle {
+	font-size: 22px;
+	font-weight: bold;
+	margin: 0px;
+	line-height: 50px;
+	display: block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+	overflow: hidden;
+	margin: 0px;
+	padding: 0px 10px;
+	color: rgb(59, 62, 67);
+	letter-spacing: -1px;
+}
+
+.Detail_container {
+	padding: 20px;
+}
+
+.WriterInfo .date {
+	margin-right: 8px;
+}
+
+.page_title {
+	margin: 20px;
+	border-bottom: 1px solid #323232;
+}
+
+.WriterInfo .detail_info {
+	font-size: 12px;
+}
+
+.WriterInfo .thumb {
+	position: relative;
+	float: left;
+	padding-top: 5px;
+	margin-right: 10px;
+	width: 36px;
+	height: 36px;
+	width: 36px;
+	margin-right: 10px;
+	padding-top: 5px;
+}
+
+.CommentBox a {
+    color: turquoise;
+}
+
+.CommentBox .comment_list 
+.comment_area {
+	position: relative;
+	padding: 12px 23px 10px 0;
+}
+
+.CommentBox .comment_list 
+.comment_thumb {
+	position: absolute;
+	top: 12px;
+	left: 0;
+	width: 36px;
+	height: 36px;
+}
+
+.CommentBox .comment_list 
+.comment_box {
+	padding-left: 46px;
+}
+
+.CommentBox .comment_list 
+.CommentItem.CommentItem-reply {
+    padding-left: 46px;
+}
+
+.CommentBox .comment_list 
+.comment_info_box {
+	margin-top: 7px;
+	font-size: 12px;
+	color: #979797;
+}
+
+.CommentBox .comment_list .comment_info_box 
+.comment_info_date {
+	margin-right: 8px;
+}
+
+.CommentBox .comment_list 
+.CommentItem:first-child {
+    border-top: 0;
+} 
+
+.CommentBox .comment_list 
+.CommentItem {
+    position: relative;
+    border-top: 1px solid #dae0e5;
+}
+
+.view-comment {
+
+	color: rgb(51, 51, 51);
+	/* margin-top: 3px;
+	margin-right: 12px; */
+	margin: 3px 12px 0px 0px;
+	padding: 0px 0px 5px;
+	text-transform: capitalize;
+	overflow: hidden;
+	font-size: 20px;
+	font-weight: 500;
+	border-bottom-color: rgb(51, 51, 51);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	display: inline-block;
+	position: relative;
+}
+
+.reply{
+margin: 5px 5px 5px 10px;
+}
+
+.replydel{
+margin: 5px;
+}
+
+.replybtn{
+display: grid;
+justify-content: end;
+font-size: 13px;
+margin-top: 8px;
+}
+
+.rreplydel{
+margin: 5px;
+font-size: 13px;
+}
+
+</style>
+<section>
+	<div class="container" style="justify-content: center;">
+		<div class="row" style="padding-top: 20px; border-bottom: 1px solid #323232;">
+			<h2>자유게시판</h2>
+		</div>
+		<div class="bbsdetail">
+			<div class="ContentBox">
+				<div class="Detail_header">
+					<div class="title" id="btitle"></div>
+					<div class="WriterInfo">
+						<span class="thumb">
+							<img src="https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77"
+								alt="프로필 사진" width="36" height="36">
+						</span>
+						<div class="profile_info">
+							<div class="notranslate" id="nickname"></div>
+						</div>
+						<div class="detail_info">
+							<span class="date" id="bregdate"></span>
+							<span class="count" id="breadcount">조회수</span>
+						</div>
+					</div>
+				</div>
+				<div class="Detail_container">
+					<div id="bbscontent"></div>
+				</div>
+			</div>
+		</div>
+	
+				<!-- 댓글 -->
+		<div class="CommentBox" style="border-top: 1px solid #ebecef">
+			<div class="comment_title" style="position: relative; padding-top: 16px; margin-bottom: 11px;">
+				<h3 class="view-comment">Comments</h3>
+			</div>
+			<!-- <ul class='comment_list' style='list-style: none; margin: 0; padding: 0;'>
+				<div id="commentlist"></div>
+			</ul> -->
+			<div class="card"> <!--  bg-light(뒷배경 회색클래스) -->
+				<div class="card-body">
+					<div class="mb-4" ">
+						<!-- Parent comment-->
+						<div class="ms-3">
+							<ul class='comment_list' style='list-style: none; margin: 0; padding: 0;'>
+								<div id="commentlist"></div>
+							</ul>
+						</div>                       			
+					</div>                    
+					<div id="comment" class="business col-md-10">
+						<div id ="commentexist"></div>
+			    		<textarea id="commentinput" placeholder="댓글을 입력해주세요" class="form-control" rows="3"></textarea><br>
+			    		<a id="btnComment" href'#' role='button' onclick="commentInput()" style="float: right;">작성완료</a>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					</div>
+				</div>                                  
+			</div>	
+		</div>
+		<br>
+		<div class="bottom" style="padding: 20px;">
+			<button type="button" id="bbslist" class="btn btn-secondary" onclick="bbsbtn()">글목록</button>
+			<button type="button" id="bbsupdate" class="btn btn-secondary">글수정</button>
+			<button type="button" id="bbsdelete" class="btn btn-secondary">글삭제</button>
+		</div>
+	</div>
+</section>	
+
+<script type="text/javascript">
+
+	var seq = sessionStorage.getItem("pickNum");                // let
+	var user = localStorage.getItem("login");                   // let 
+	
+	$.ajax({
+		url : 'http://localhost:3000/bbs/bbsdetail',
+		type : 'get',
+		data : {
+			seq : bbsseq
+		},
+		success : function(data) {
+			//	alert('success');
+			//	alert( JSON.stringify(data));
+			//	alert(data.bcontent);
+			$("#nickname").text(data.nickname);
+			$("#btitle").text(data.btitle);
+			$("#bregdate").text(data.bregdate);
+			$("#breadcount").text("조회 " + data.breadcount);
+			$("#bbscontent").append(data.bcontent);
+			
+			// login한 id와 다를 때는 수정과 삭제를 할 수 없도록 처리 
+			
+			let login = JSON.parse(localStorage.getItem("login"));
+			if(login != null){
+				if (data.userid != login.id) {
+					$("#bbsupdate").hide();              
+					$("#bbsdelete").hide();
+					
+				}
+			}else{
+				$("#bbsupdate").hide();              
+				$("#bbsdelete").hide();
+			}
+
+
+		},
+		error : function() {
+			alert('error');
+		}
+	});
+	/*  
+	$("#bbslist").click(function() {
+		location.href = "/bbs/bbslist.html";
+	});
+	 */
+	 
+	$("#bbsanswer").click(function() {
+		//	location.href = "bbsanswer.html?seq=" + seq;	
+		$.ajax({
+			url : "bbsanswer.html",
+			data : {
+				"seq" : bbsseq
+			},
+			success : function(resp) {
+				$("#content").html(resp);
+			}
+		});
+	});
+
+	$("#bbsupdate").click(function() {
+		//		location.href = "bbsupdate.html?seq=" + seq;	
+
+		$.ajax({
+			url : "bbs/bbsupdate.html",
+			data : {
+				"seq" : bbsseq
+			},
+			success : function(resp) {
+				$("#content").html(resp);
+			}
+		});
+		sessionStorage.setItem("nowPage", "bbsupdatepage");
+
+	});
+
+	$("#bbsdelete").click(function() {
+
+		$.ajax({
+			url : "http://localhost:3000/bbsdelete",
+			type : "get",
+			data : {
+				"seq" : bbsseq
+			},
+			success : function(resp) {
+				if (resp == "OK") {
+					//alert('글이 삭제되었습니다');
+					Swal.fire({
+                 		icon: 'success',
+                    	title: '글이 삭제되었습니다'
+                	});
+				} else {
+					//alert('글이 삭제되지 않았습니다');
+					Swal.fire({
+                 		icon: 'error',
+                    	title: '글이 삭제되지 않았습니다'
+                	});
+				}
+				bbsbtn();
+			},
+			error : function() {
+				alert('error');
+			}
+		});
+
+	});
+	
+	var reply_flag = 0;                        	     	//   let
+	var comment_flag = 0;                      	     	//   let
+	getCommentlist(-1);
+	// 댓글 list
+	function getCommentlist(replyseq){
+		
+		let userid = "";
+		if(user != null){
+			userid = JSON.parse(user).id;
+		}
+
+		let bbsseq = seq;
+		//alert(bbsseq);
+		$.ajax({
+			url:'http://localhost:3000/allBbsComment',
+			type:"get",
+			data: {'bbsseq':bbsseq},
+			success:function(list){
+			
+				$("#commentlist").html("");
+				$.each(list, function (i, item) {
+					if(item.cbdel == 0){
+						let str = "";
+						if(item.depth == 0){
+							str += "<li class='CommentItem'>";
+							str += "<div class='comment_area'>";
+							str += "<span class='comment_thumb'> <img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></span>";
+							//----------------------------------------------------------------------		
+							str += "<div class='comment_box'>";
+							str += "<div class='comment_nick_box' style='font-weight: 700 !important; font-size: 15px;'>";
+							str += "<div class='comment_nickname'>"+ item.nickname +"</div>";
+							str += "</div>";
+							//-----------------------------------------------------------------------
+							str += "<div class='comment_text_box'>";
+							str += "<p class='comment_text_view' style='margin: 0'>";
+							str += "<span class='text_comment'>"+ item.cbcontent +"</span>";
+							str += "</p></div>";
+							//-----------------------------------------------------------------------
+							str += "<div class='comment_info_box'>";
+							str += "<span class='comment_info_date'>"+ item.cbregdate +"</span>";
+							str += "<span> <a href'#' role='button' class='reply' onclick='reply(" + item.seq + ")'>답글달기</a></span>";
+							if(item.userid == userid){
+								str += "<span> <a href'#' role='button' class='replydel' onclick='delete_comment2(" + item.seq + ", " + item.depth + ", "+ item.ref +" )'>삭제</a><span></div>";
+							}
+							else{
+								str += "</div>";
+							}
+							//--------------------------------------------------------------------------
+							str += "</div></div></li>";
+						}
+						else{
+							
+							str += "<li class='CommentItem CommentItem-reply'>";
+							str += "<div class='comment_area'>";
+							//----------------------------------------------------------------------		
+							str += "<div class='comment_box'>";
+							str += "<span class='comment_thumb'> <img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></span>";
+							str += "<div class='comment_nick_box'>";
+							str += "<div class='comment_nickname' style='font-weight: 700 !important; font-size: 15px;'>" + item.nickname + "</div>";
+							str += "</div>";
+							//-----------------------------------------------------------------------
+							str += "<div class='comment_text_box'>";
+							str += "<p class='comment_text_view' style='margin: 0'>";
+							str += "<span class='text_comment'>" + item.cbcontent + "</span></p>";
+							str += "</div>";
+							//-----------------------------------------------------------------------
+							str += "<div class='comment_info_box'>";
+							str += "<span class='comment_info_date'>"+ item.cbregdate +"</span>";
+							if(item.userid == userid){
+								str += "<a href'#' role='button' class='replydel' onclick='delete_comment2(" + item.seq + ", " + item.depth + ", "+ item.ref +" )'>삭제</a></div></div>";
+							}
+							else{
+								str += "</div></div>";
+							}
+							//--------------------------------------------------------------------------
+							str += "</div></div></li>";	
+						}   
+						$("#commentlist").append(str);
+						
+						if(replyseq == item.seq){
+							let replytext = "";
+							/* 
+							replytext += "<td>" + "<button type='button' id='btnReply' class='btn btn-secondary' onclick='replyRegi(" + item.seq + ")'>작성완료</button></td>";      
+							replytext += "<td colspan='2'>"; 
+							replytext += '<textarea id="replyinput" class="form-control" rows="5"></textarea>'
+							replytext += "</td>";
+							replytext += "</tr>";
+							 */
+							replytext += '<textarea id="replyinput" class="form-control" rows="3" placeholder="답글을 입력해주세요"></textarea>';
+							replytext += "<a href'#' role='button' id='btnReply' class='replybtn' onclick='replyRegi(" + item.seq + ")'>작성완료</a>";
+							
+							$("#commentlist").append(replytext);
+						} 
+					}
+				})
+			},
+			error:function(){
+				alert("commentlist error");
+			}
+		});	
+	}
+	
+	// 답글 달기 버튼
+	function reply( parentseq ){
+		
+		if(reply_flag == parentseq){
+			reply_flag = -2;
+			parentseq = -1;	
+		}
+		else{
+			reply_flag = parentseq;
+		}
+		
+		getCommentlist( parentseq );	
+	}
+
+
+	// 삭제 버튼
+	function delete_comment2(comment_seq, depth, ref)
+	{
+		if(user != null){	
+			
+			let userid = JSON.parse(user).id;                             
+			let bbsseq = seq;
+		 		
+			$.ajax({
+				url:'http://localhost:3000/BbsCmtDelete',
+				type:'get',
+				data:{ 'seq':comment_seq, 'depth':depth, 'ref':ref, 'bbsseq':bbsseq }, 
+				success:function(data){
+			 		// alert('등록완료');
+			 		getCommentlist(-1);
+			 		reply_flag = -2; // 답글작성 완료시
+				},
+				error:function(){
+					alert('delete error');
+				}
+			});
+				 
+		}else{
+			alert("user is null");
+		}
+	}
+
+	// 작성완료 버튼 : 답글 insert
+	function replyRegi( parentseq )
+	{
+		if(user != null){	
+			
+			let userid = JSON.parse(user).id;                             
+			let nickname = JSON.parse(user).nickname;
+			let cbcontent = $("#replyinput").val();
+			
+			cbcontent = cbcontent.trim();
+			// alert(cacontent);
+			let bbsseq = seq;
+			if(cbcontent != ""){ 
+		 		
+				$.ajax({
+					url:'http://localhost:3000/BbsReplyInsert',
+					type:'get',
+					data:{ 'seq':parentseq, 'userid':userid, 'nickname':nickname, 'cbcontent':cbcontent, 'bbsseq':bbsseq }, 
+					success:function(data){
+				 		// alert('등록완료');
+				 		getCommentlist(-1);
+				 		reply_flag = -2; // 답글작성 완료시
+					},
+					error:function(){
+						alert('replyinput error');
+					}
+				});
+				  
+			}else{
+				Swal.fire({
+             		icon: 'error',
+                	title: '댓글을 입력하세요',
+            	})
+			}
+			
+		}else{
+			Swal.fire({
+				icon: 'error',
+				title: '아직 회원이 아니시군요!',
+				text: '로그인 후 여러분의 의견을 남겨주세요',
+				footer: '<span style="padding-right: 30px"><a href="login.html">로그인</a></span>' + '<a href="" onclick="register()">회원가입</a>'
+			})
+		}
+	}
+
+
+	// 댓글 등록 버튼
+	function commentRegi(){
+		
+		if(comment_flag == 0){
+			
+			let commentexist = '<textarea id="commentinput" class="form-control" placeholder="댓글을 남겨보세요" rows="7"></textarea>';
+			$("#commentexist").append(commentexist);
+			
+			let buttons = '<button type="button" id="btnComment" class="btn btn-secondary" onclick="commentInput()" style="float: right">작성완료</button>'; 
+			$("#buttons").append(buttons);
+			 
+			comment_flag = 1;
+		}
+		else{
+			$("#commentexist").empty();
+		    $("#btnComment").remove();
+		    comment_flag = 0;
+		}
+	}
+
+	
+    // 카테고리 이동
+    function categoryarticlecat(category) {
+        $.ajax({
+            url: "categories/categoryarticlelist.html",
+            success: function(resp) {
+                // alert(resp);		
+                $("#content").html(resp);
+            },
+            error: function() {
+                alert("home error");
+            }
+        });
+        sessionStorage.setItem("category", category);
+        sessionStorage.setItem("nowPage", "categorylist");
+
+    }
+    
+	
+	// 댓글 insert
+	function commentInput(){
+		
+		if(user != null){	
+			
+			let userid = JSON.parse(user).id;     
+			let nickname = JSON.parse(user).nickname;
+			let cbcontent = $("#commentinput").val();
+			
+			cbcontent = cbcontent.trim();
+			// alert(cacontent);
+			let bbsseq = seq;
+			
+			if(cbcontent != ""){ 
+				
+				$.ajax({
+					url:'http://localhost:3000/BbsCommentInsert',
+					type:'get',
+					data:{ 'userid':userid, 'nickname':nickname, 'cbcontent':cbcontent, 'bbsseq':bbsseq }, 
+					success:function(data){
+				 		// alert('등록완료');
+				 		$('#commentinput').val('');
+				 		getCommentlist(-1);
+					},
+					error:function(){
+						alert('commentinput error');
+					}
+				});
+			}else{
+				alert("댓글을 입력하세요");
+			}
+			
+		}else{
+			//alert("user is null");
+			Swal.fire({
+				icon: 'error',
+				title: '아직 회원이 아니시군요!',
+				text: '로그인 후 여러분의 의견을 남겨주세요',
+				footer: '<span style="padding-right: 30px"><a href="login.html">로그인</a></span>' + '<a href="" onclick="register()">회원가입</a>'
+			})
+		}
+	}
+</script>

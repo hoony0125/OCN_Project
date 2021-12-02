@@ -1,0 +1,61 @@
+@charset "UTF-8";
+.listbtn { display:block; 
+width:60px; 
+height:35px; 
+line-height:35px; 
+border:1px #3399dd; 
+margin:15px auto; 
+background-color:rgb(0, 30, 53); 
+text-align:center; 
+cursor: pointer; 
+color:rgb(255, 255, 255); 
+transition:all 0.9s, color 0.3;
+border-radius: 5px; } 
+
+.listbtn:hover{color:#333; 
+border-color: #fabf02;}
+
+.hover3:hover{ box-shadow: 0 80px 0 0 #fabf02 inset, 0 -80px 0 0 #fabf02 inset; }
+
+
+
+select {
+    width:100%;
+    height:100%;
+   padding:0 28px 0 10px;
+   font-size: 15px;
+    border:0;
+    -webkit-appearance:none; /* for chrome */
+    -moz-appearance:none; /*for firefox*/
+    appearance:none;
+    box-sizing: border-box;
+    background:transparent!important;
+ }
+ 
+
+
+.lselect-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+.lselect-wrap {
+    height: 26px;
+    cursor: pointer;
+   background:url('../img/caret-square-down-regular.svg') no-repeat 93% 90%/12px auto;
+   padding-left: 15px;
+   padding-bottom: 7px;
+ }
+ .lselect_box{
+    display: block;
+    width: 68px;
+    height: 34px;
+    padding: 6px 10px 4px 9px;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

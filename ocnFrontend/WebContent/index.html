@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<link href="css/chatbox.css" rel="stylesheet" >
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+
+<body>
+<div class="chat_icon">
+		<img src="./img/bubble-chat.png" alt="chat" style="width:60px;">
+	</div>
+	
+	<div class="chatbox_support">
+		<div class="chatbox__header">
+			<div class="chatbox__content--header">
+				<h4 class="chatbox__heading--header">OCN 문의하기</h4>
+				<p class="chatbox__description--header">무엇이든 물어보세요!</p>
+			</div>
+		</div>
+	
+		<div class="chatbox__messages"></div>
+	
+		<div id="myform">
+			<input type="hidden" id="openmsg" value="open"> 
+		</div>
+		
+		<div class="chatbox__footer">
+			<input type="text" id="usermsg" placeholder="message please"> 
+			<input type="button" id="submitmsg" class="chatbox__send--footer" value="send">
+		</div>
+	</div>
+
+
+<script type="text/javascript">
+location.href = "main.html";
+
+
+$(document).ready(function() {
+	$('.chat_icon').click(function(event){
+		$('.chatbox_support').toggleClass('active');
+	});
+	
+	
+
+    $(".chatbox__messages").stop().animate({
+        scrollTop: $(".chatbox__messages")[0].scrollHeight
+    }, 2000);
+
+    if ($("#openmsg").val() != "") {
+
+        // naver 전송
+        $.ajax({
+            url: "http://localhost:3000/chatbot",
+            type: "post",
+            data: {
+                msg: $("#openmsg").val()
+            },
+            success: function(str) {
+                //	alert('success');
+                //	alert(str);
+                //	let json = JSON.parse(str);
+                //	alert(json.bubbles[0].type);	
+
+                respProc(str);
+            },
+            error: function() {
+                alert('error');
+            }
+        });
+
+        $(".chatbox__messages").stop().animate({
+            scrollTop: $(".chatbox__messages")[0].scrollHeight
+        }, 2000);
+    }
+    
+    
+    $("#usermsg").keydown(function(key){
+		if(key.keyCode==13){ 
+			if ($("#usermsg").val() != "") {
+	        	
+
+	            $(".chatbox__messages").append(
+	                "<div align='right'><div class='usermsg'>" +
+	                $("#usermsg").val() +
+	                "</div><img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></div><br>");
+
+	            // naver 전송
+	            $.ajax({
+	                url: "http://localhost:3000/chatbot",
+	                type: "post",
+	                data: {
+	                    msg: $("#usermsg").val()
+	                },
+	                success: function(str) {
+	                    //	alert('success');
+	                    //	alert(str);
+	                    //	let json = JSON.parse(str);
+	                    //	alert(json.bubbles[0].type);	
+
+	                    respProc(str);
+	                    $("#usermsg").val("");
+	                },
+	                error: function() {
+	                    alert('error');
+	                }
+	            });
+
+	            $(".chatbox__messages").stop().animate({
+	                scrollTop: $(".chatbox__messages")[0].scrollHeight
+	            }, 2000);
+	            
+			}    
+		}
+        });
+			
+		
+   $("#submitmsg").click(function() { 
+			if ($("#usermsg").val() != "") {
+        	
+
+            $(".chatbox__messages").append(
+                "<div align='right'><div class='usermsg'>" +
+                $("#usermsg").val() +
+                "</div><img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></div><br>");
+
+            // naver 전송
+            $.ajax({
+                url: "http://localhost:3000/chatbot",
+                type: "post",
+                data: {
+                    msg: $("#usermsg").val()
+                },
+                success: function(str) {
+                    //	alert('success');
+                    //	alert(str);
+                    //	let json = JSON.parse(str);
+                    //	alert(json.bubbles[0].type);	
+
+                    respProc(str);
+                    $("#usermsg").val("");
+                },
+                error: function() {
+                    alert('error');
+                }
+            });
+
+            $(".chatbox__messages").stop().animate({
+                scrollTop: $(".chatbox__messages")[0].scrollHeight
+            }, 2000);
+            
+		}    
+       
+	
+});
+});
+
+function respProc(str) {
+    let json = JSON.parse(str);
+
+    if (json.bubbles[0].type == "text") {
+
+        $(".chatbox__messages").append(
+            "<div align='left'><img src='./img/chatbot.png' style='width:36px; height:36px'><div class='botmsg'>" +
+            json.bubbles[0].data.description +
+            "</div></div><br>");
+
+    } else {
+
+        //alert(json.bubbles[0].data.cover.type);	// image, text(link)
+
+        if (json.bubbles[0].data.cover.type == "image") {
+            let title = json.bubbles[0].data.cover.title;
+            let imageUrl = json.bubbles[0].data.cover.data.imageUrl;
+
+            //	alert(title);
+            //	alert(imageUrl);
+
+            let imgTag = "<img src='" + imageUrl + "' width='200' class='img1'/>";
+
+            $(".chatbox__messages").append(
+                "<div align='left'><img src='./img/chatbot.png' style='width:36px; height:36px'><div class='botmsg'>" + title +
+                "<br>" + imgTag + "</div></div><br>");
+        } else { // text -> a tag
+            let description = json.bubbles[0].data.cover.data.description;
+
+            let contentTable = json.bubbles[0].data.contentTable;
+            let urls = "<div align='left'><img src='./img/chatbot.png' style='width:36px; height:36px'><div class='botmsg'>" +
+                description + "<br>";
+            $.each(contentTable, function(index, item) {
+                let title = item[0].data.title;
+                let url = item[0].data.data.action.data.url;
+                
+                let moving_num = 0;
+                if(title == 'CNN' || title == 'cnn'){
+                	moving_num = 1;
+                }else if(title == 'BBC' || title == 'bbc'){
+                	moving_num = 2;
+                }else if(title.includes('경제')){
+                	moving_num = 3;
+                }else if(title.includes('테크')){
+                	moving_num = 4;
+                }else if(title.includes('건강')){
+                	moving_num = 5;
+                }else if(title.includes('스포츠')){
+                	moving_num = 6;
+                }
+
+                urls += '<a href="" onclick="movingPage(' + moving_num + ')">' + title + '</a><br>';
+            });
+            urls += "</div></div><br>";
+            $(".chatbox__messages").append(urls);
+
+        }
+    }
+}
+	function movingPage(page_num) {
+		
+		let url = "ChatBot.html";
+		if(page_num == 1){
+			url = "cnn/cnnlist.html";
+			sessionStorage.setItem("nowPage", "cnnlistpage");
+		}
+		else if(page_num == 2){
+			url = "bbc/bbclist.html";
+			sessionStorage.setItem("nowPage", "bbclistpage");
+		}
+		else if(page_num == 3){
+			url = "categories/categoryarticlelist.html";
+			sessionStorage.setItem("category", 0);
+			sessionStorage.setItem("nowPage", "categorylist");
+		}
+		else if(page_num == 4){
+			url = "categories/categoryarticlelist.html";
+			sessionStorage.setItem("category", 1);
+			sessionStorage.setItem("nowPage", "categorylist");
+		}
+		else if(page_num == 5){
+			url = "categories/categoryarticlelist.html";
+			sessionStorage.setItem("category", 2);
+			sessionStorage.setItem("nowPage", "categorylist");
+		}
+		else if(page_num == 6){
+			url = "categories/categoryarticlelist.html";
+			sessionStorage.setItem("category", 3);
+			sessionStorage.setItem("nowPage", "categorylist");
+		}
+		
+		$.ajax({
+        url: url,
+        success: function(resp) {		
+            $("#content").html(resp);
+        }
+    });
+}   
+
+</script>
+
+</body>
+</html>
+
+

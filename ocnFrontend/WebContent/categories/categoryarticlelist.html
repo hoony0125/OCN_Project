@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="css/tab.css" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <script type="text/javascript">
+        var searchFocus = document.getElementById('search-focus');
+        var keys = [{
+                keyCode: 'AltLeft',
+                isTriggered: false
+            },
+            {
+                keyCode: 'ControlLeft',
+                isTriggered: false
+            },
+        ];
+
+        window.addEventListener('keydown', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = true;
+                }
+            });
+
+            const shortcutTriggered = keys.filter((obj) => obj.isTriggered).length === keys.length;
+
+            if (shortcutTriggered) {
+                searchFocus.focus();
+            }
+        });
+
+        window.addEventListener('keyup', (e) => {
+            keys.forEach((obj) => {
+                if (obj.keyCode === e.code) {
+                    obj.isTriggered = false;
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript" src="page/jquery.twbsPagination.min.js"></script> <!-- 추가 -->
+
+
+</head>
+
+<body>
+    <div class="container" style="justify-content: center;">
+        <div class="col-sm-offset-1 col-sm-3" id="pressTitle" style="display:none;">BBC</div>
+        <div class="row" style="margin-top: 10px">
+            <div class="col-sm-offset-1 col-sm-3" id="categoryTitle" style="flex: 0 0 auto; width: 25%; font-size: 40px; margin-top: 10px; margin-bottom: 10px; margin-left: -8px; ">
+            </div>
+        </div>
+
+        <div class="row">
+            <div align="center">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true" onclick="getArticle('BBC', 0)">
+                            BBC
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="profile-tab" data-toggle="tab" role="tab" aria-controls="profile" aria-selected="false" onclick="getArticle('CNN', 0)">
+                            CNN
+                        </button>
+                    </li>
+                </ul>
+
+
+                <!-- Tabs content -->
+                <div class="tab-content" id="ex1-content">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <table class="table table-hover" style="font-size: 16px;">
+                            <col width="80px">
+                            <col width="800px">
+                            <col width="180px">
+                            <col width="80px">
+                            <tr align="center">
+                                <thead align="center">
+                                    <tr>
+                                        <th>
+                                            번호
+                                        </th>
+                                        <th>
+                                            제목
+                                        </th>
+                                        <th>
+                                            작성일
+                                        </th>
+                                        <th>
+                                            조회수
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <!-- 테이블 내용 -->
+                                <tbody id="articlelist">
+                                </tbody>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <table class="table table-hover" style="font-size: 16px;">
+                            <col width="80px">
+                            <col width="800px">
+                            <col width="180px">
+                            <col width="80px">
+                            <thead align="center">
+                                <tr>
+                                    <th>
+                                        번호
+                                    </th>
+                                    <th>
+                                        제목
+                                    </th>
+                                    <th>
+                                        작성일
+                                    </th>
+                                    <th>
+                                        조회수
+                                    </th>
+                                </tr>
+                            </thead>
+                            <!-- 테이블 내용 -->
+                            <tbody id="articlelist">
+                            </tbody>
+
+                        </table>
+                    </div>
+                    <!-- 페이징 -->
+                    <div class="container" style="">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center" id="pagination" style="justify-content:center">
+                            </ul>
+                        </nav>
+                    </div>
+                    <!-- 검색 -->
+
+                    <table style="margin-left: auto;margin-right: auto; margin-top: 5px; margin-bottom: 25px">
+                        <tr>
+                            <td>
+                                <div class="lselect-group" style="margin-top: -8px;">
+                                    <div class="lselect-wrap">
+                                        <select class="lselect_box" id="_choice" name="choice">
+                                            <option value="title" selected="selected">제목</option>
+                                            <option value="content">내용</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td style="padding-left: 5px">
+                                <div class="form-outline">
+                                    <input type="search" class="form-control" id="_search" id="form1" name="search" placeholder="Search" style=" width: 180px; height: 34px;">
+                                </div>
+                            </td>
+
+                            <td style="padding-left: 5px">
+                                <span>
+                                    <button type="button" class="listbtn hover3" id="btnSearch" style="margin-left: 2px; height: 34px; width: 50px; padding-bottom: 2px;">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <script type="text/javascript">
+                var category_press = sessionStorage.getItem("category"); // category
+                getCategory();
+                getArticle("BBC", 0);
+                // 카테고리 제목 가져오기 
+                function getCategory() {
+                    if (category_press == 0)
+                        document.getElementById("categoryTitle").innerHTML = "Business";
+                    else if (category_press == 1)
+                        document.getElementById("categoryTitle").innerHTML = "Tech";
+                    else if (category_press == 2)
+                        document.getElementById("categoryTitle").innerHTML = "Health";
+                    else if (category_press == 3)
+                        document.getElementById("categoryTitle").innerHTML = "Sport";
+                }
+                // 리스트 가져오기, 반환된 리스트 출력
+                function getArticlelist(press, page, total) {
+                    let choice = $("#_choice").val();
+                    let search = $("#_search").val();
+                    $.ajax({
+                        url: 'http://localhost:3000/categorylist',
+                        type: "get",
+                        data: {
+                            'choice': choice,
+                            'search': search,
+                            'page': page,
+                            'category': category_press,
+                            'press': press
+                        },
+                        success: function(list) {
+                            $("#articlelist").html("");
+                            $.each(list, function(i, item) {
+                                if (item.atitle.length > 90) {
+                                    item.atitle = item.atitle.substring(0, 90) + "...";
+                                }
+
+                                let comment_num = "";
+                                if (item.comment_num > 0) {
+                                    comment_num = "&nbsp[" + item.comment_num + "]";
+                                }
+
+                                let str = "<tr>";
+                                str += "<td  align='center'>" + (total - ((page * 10) + i)) + "</td>";
+                                str += "<td>" + "<a href='#' onclick='articledetail(" + item.seq + ")'><font color= '#003772'>" + item.atitle + " </font></a> " + comment_num + "</td>"
+                                str += "<td  align='center'>" + item.aupload + "</td>";
+                                str += "<td  align='center'>" + item.areadcount + "</td>";
+                                str += "</tr>";
+                                $("#articlelist").append(str);
+                            })
+                        },
+                        error: function() {
+                            alert("list error");
+                        }
+                    });
+                }
+                // detail 이동
+                function articledetail(seq) {
+                    $.ajax({
+                        url: "articledetail.html",
+                        success: function(resp) {
+                            $("#content").html(resp);
+                        }
+                    });
+                    sessionStorage.setItem("nowPage", "articledetail");
+                    sessionStorage.setItem("pickNum", seq);
+                }
+
+                //기사 총수를 취득 - 페이징
+                function getArticleCount(press) {
+                    let choice = $("#_choice").val();
+                    let search = $("#_search").val();
+                    let totalCount = 0;
+                    $.ajax({
+                        url: "http://localhost:3000/CategoryCount",
+                        type: "get",
+                        async: false,
+                        data: {
+                            'category': category_press,
+                            'press': press,
+                            'choice': choice,
+                            'search': search,
+                            'page': 0
+                        },
+                        success: function(count) {
+                            loadPage(count, press);
+                            totalCount = count;
+                        },
+                        error: function() {
+                            alert("count error");
+                        }
+                    });
+                    return totalCount;
+                }
+                // 페이징
+                function loadPage(totalCount, press) {
+                    let pageSize = 10; // 페이지의 크기
+                    let _totalPages = totalCount / 10;
+                    if (totalCount % 10 > 0) {
+                        _totalPages++;
+                    }
+
+                    $("#pagination").twbsPagination('destroy');
+
+                    if (_totalPages > 0) {
+
+                        // 페이지 갱신
+                        $("#pagination").twbsPagination({
+                            startPage: 1,
+                            totalPages: _totalPages,
+                            visiblePages: 10,
+                            first: '<span sris-hidden="true">«</span>',
+                            prev: "이전",
+                            next: "다음",
+                            last: '<span sris-hidden="true">»</span>',
+                            initiateStartPageClick: false, // onPageClick 자동호출이 되도록 하지 않는다
+                            onPageClick: function(event, page) { // 페이지 번호를 클릭
+                                //	alert(page);			1 2 3 4
+                                getArticlelist(press, page - 1, totalCount); // 0 1 2 3
+                            }
+                        });
+                    }
+
+                }
+                //BBC, CNN 버튼 클릭
+                function getArticle(press, page) {
+                    document.getElementById("pressTitle").innerHTML = press;
+
+                    let total = getArticleCount(press);
+                    getArticlelist(press, page, total);
+                }
+                //검색
+                $("#btnSearch").click(function() {
+                    press = document.getElementById("pressTitle").innerHTML;
+                    getArticle(press, 0);
+                });
+            </script>
+</body>
+
+</html>

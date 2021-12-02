@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+.chat_icon{
+	position: fixed;
+	right:30px;
+	bottom:10px;
+	width:60px;
+	z-index:1000;
+	cursor: pointer;
+}
+
+.chatbox_support {
+    background: #f9f9f9;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    width:400px;
+	height: 600px;
+	position:fixed;
+	right:30px;
+	bottom: 80px;
+	box-shadow:0 0 11px rgba(0,0,0,0.9);
+	z-index:100000;
+	transition: all 0.3s ease-out;
+	transform: scaleY(0);
+	transform-origin: bottom;
+}
+.chatbox_support.active{
+	transform: scaleY(1);	
+}
+  
+  .usermsg, .botmsg{
+  	display: inline-block;
+  	background-color: #FEC411;
+  	color: black;
+  	font-size: small;
+  	border-radius: 0.5em;
+	padding: 8px 8px 8px 8px;  								/* (위, 오른쪽, 아래, 왼쪽 순임) */  	  	
+  	text-align: left;
+  	max-width: 65%;
+  	margin-bottom: 2px;
+  	margin-left: 3px;
+  	margin-right: 3px;
+  }
+  
+  .botmsg{
+  background-color: black;
+  color: white;
+  }
+  
+  .msgln span.chat-time {
+    color: #666;
+    font-size: 60%;
+    vertical-align: super;
+  }
+  
+    #myform {
+    gap: 10px;
+   /*  justify-content: center; */
+    margin-left: auto;
+    margin-right: auto;
+  }
+   
+  form label {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+   
+  input {
+    font-family: "Lato";
+  }
+   
+  a {
+    color: #FEC411;
+    text-decoration: none;
+  }
+   
+  a:hover {
+    text-decoration: underline;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+  }
+ * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+*, html {
+    --primaryGradient: linear-gradient(93.12deg, #FEC411 0.52%, #FEC411 100%);
+    --secondaryGradient: linear-gradient(268.91deg, #FEC411 -2.14%, #FEC411 99.69%);
+    --primaryBoxShadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    --secondaryBoxShadow: 0px -10px 15px rgba(0, 0, 0, 0.1);
+    --light: 300;
+    --regular: 400;
+    --semiBold: 600;
+    --extraLight: 300;
+    --italic: 300;
+    --primary: #FEC411;
+}
+
+/* 300;0,400;0,600;1,300 */
+
+body {
+    font-weight: 300;
+    font-size: 100%;
+    background: white;
+    /* margin: 10px auto; */
+    font-family: "Lato";
+}  
+
+  .chatbox__messages {
+    padding: 20px 20px;
+    height: 410px;
+	overflow: auto;
+}
+   
+  #loginform {
+    padding-top: 18px;
+    text-align: center;
+  }
+   
+  #loginform p {
+    padding: 15px 25px;
+    font-size: 1.4rem;
+    font-weight: bold;
+  }
+   
+  #usermsg {
+    flex: 1;
+    border-radius: 4px;
+    border: 1px solid #989898;
+    color: black;
+  }
+
+  #name {
+    border-radius: 4px;
+    border: 1px solid #ff9800;
+    padding: 2px 8px;
+  }
+   
+
+   
+  .error {
+    color: #ff0000;
+  }
+   
+  #menu {
+    padding: 10px 30px;
+    display: flex;    
+  }
+   
+  #menu p.welcome {
+    flex: 1;
+  }
+   
+  a#exit {
+    color: white;
+    background: #c62828;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+  }
+  
+.chatbox__header {
+    background: var(--primaryGradient);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 0px 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: var(--primaryBoxShadow);
+}
+
+
+
+.chatbox__heading--header {
+    font-size: 1.2rem;
+    color: black;
+   	font-weight: bold;
+}
+
+.chatbox__description--header {
+    font-size: .9rem;
+    color: black;
+}
+
+.chatbox__footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px 20px;
+    background: var(--secondaryGradient);
+    box-shadow: var(--secondaryBoxShadow);
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-top: 20px;
+}
+
+.chatbox__footer input {
+    border: none;
+    padding: 10px 10px;
+    border-radius: 30px;
+}
+
+.chatbox__send--footer {
+    color: white;
+    background-color: black;
+    margin-left:10px;
+}
+
+.chatbox__button button,
+.chatbox__button button:focus,
+.chatbox__button button:visited {
+    padding: 10px;
+    background: white;
+    border: none;
+    outline: none;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-left-radius: 50px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}

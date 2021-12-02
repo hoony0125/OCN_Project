@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript"></script>
+    
+    <!-- SweetAlert2 -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+</head>
+
+<style type="text/css">
+    .form-row {
+        margin-left: 25px;
+        margin-right: 25px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background: #f8f9fa;
+    }
+
+    .row {
+        background: white;
+        border-radius: 30px;
+        box-shadow: 12px 12px 22px grey;
+    }
+
+    .btn1 {
+        border: none;
+        outline: none;
+        height: 50px;
+        width: 100%;
+        background-color: black;
+        color: white;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .btn1:hover {
+        background: white;
+        border: 1px solid;
+        color: black;
+    }
+
+    .btn2 {
+        border: none;
+        outline: black;
+        height: 50px;
+        width: 100%;
+        background-color: white;
+        color: black;
+        border-radius: 4px;
+        font-weight: bold;
+    }
+
+    .btn2:hover {
+        background: black;
+        border: 1px solid;
+        color: white;
+    }
+
+    #app {
+        margin-top: 100px;
+        margin-bottom: auto;
+        width: 700px;
+    }
+
+    #chk_save_id,
+    #textid,
+    #textpwd {
+        font-weight: bold;
+        margin-top: 10px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<body>
+
+    <section class="Form">
+        <div class="container" id="app">
+            <div class="row">
+                <div class="col" id="ocn" style="width:200px;">
+                    <div class="col" id="logo" style="margin-top: 40px;margin-bottom: 30px;">
+                        <img alt="그림없음" src="img/OCN_logo.png" class="rounded mx-auto d-block" style="width:35%">
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label for="floatingInput" id="textid">ID</label>
+                            <input type="text" id="id" name="id" placeholder="아이디입력" class="form-control my-2 p-2">
+                        </div>
+                    </div>
+                    <div class="form-row"  style="margin-top: 40px;">
+                        <div class="col">
+                            <label for="floatingPassword" id="textpwd">Password</label>
+                            <input type="password" id="pwd" name="pwd" placeholder="패스워드입력" class="form-control my-2 p-2">
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-top: 30px;margin-bottom: 20px;">
+                        <div class="col">
+                            <input type="checkbox" id="chk_save_id" value="ID 저장"> SAVE ID
+                        </div>
+                    </div>
+                    <div class="form-row" style="margin-bottom: 20px;">
+                        <div class="col">
+                            <button type="button" id="login" class="btn1 mt-3 mb-2 p-2">로그인</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <button type="button" class="btn2 mt-2 mb-5 p-2" onclick="register()">회원가입</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <script type="text/javascript">
+    $("#pwd").keydown(function(key){
+        if(key.keyCode==13){ 
+            $.ajax({
+                url: "http://localhost:3000/login",
+                type: "post",
+                data: {
+                    id: $("#id").val(),
+                    pwd: $("#pwd").val()
+                },
+                success: function(resp) {
+                    //	alert('success');
+                    // alert(JSON.stringify(resp));
+
+                    if (resp == "") {
+                        /* alert("id나 password를 확인해 주십시오"); */
+                    	Swal.fire({
+                     		icon: 'error',
+                        	title: '로그인하지 못했습니다',
+                        	text: 'id나 password를 확인해 주십시오'
+                    	});
+
+                    } else { // login 성공!
+                        alert(resp.nickname + "님 환영합니다");
+
+                        // session에 저장 setAttribute( , ) getAttribute()
+                        localStorage.setItem("login", JSON.stringify(resp)); // <- server에 저장하는 것이 아니다
+                        sessionStorage.setItem("nowPage", "home");
+                        location.href = "main.html";
+
+                    }
+                },
+                error: function() {
+                    alert('error');
+                }
+            });
+        }    
+     });
+    
+    $("#login").click(function() {
+    	
+        $.ajax({
+            url: "http://localhost:3000/login",
+            type: "post",
+            data: {
+                id: $("#id").val(),
+                pwd: $("#pwd").val()
+            },
+            success: function(resp) {
+                //	alert('success');
+                // alert(JSON.stringify(resp));
+                if (resp == "") {
+                	Swal.fire({
+                 		icon: 'error',
+                    	title: '로그인하지 못했습니다',
+                    	text: 'id나 password를 확인해 주십시오'
+                	});
+             
+                } else { // login 성공!
+                	
+                	let msg = resp.nickname + "님 환영합니다";
+                    Swal.fire({
+                 		icon: 'success',
+                    	title: '로그인 성공',
+                    	text: msg
+                	}).then((result) => { 
+                		
+                        localStorage.setItem("login", JSON.stringify(resp)); // <- server에 저장하는 것이 아니다
+                       	sessionStorage.setItem("nowPage", "home");
+                    	location.href = "main.html";	
+           		
+                	});                    	
+                
+                }
+            },
+            error: function() {
+                alert('error');
+            }
+        });
+    });
+
+        function register() {
+            $.ajax({
+                url: "regi.html",
+                success: function(resp) {
+                    //	alert(resp);		
+                    $("#content").html(resp);
+                }        	
+        });
+            location.href = "main.html";
+            sessionStorage.setItem("nowPage", "regi");
+      }
+
+        const saved_id = $.cookie("savedId");
+        if (saved_id) {
+            $("#id").val(saved_id);
+            $("#chk_save_id").attr("checked", "checked")
+        }
+
+        $("#chk_save_id").click(function() {
+            if ($("#chk_save_id").is(":checked")) {
+
+                if ($("#id").val().trim() === "") {
+                    
+                	Swal.fire({
+                 		icon: 'error',
+                    	text: 'id를 입력해 주십시오'
+                	});
+
+                    
+                    $("#id").val().trim();
+                    $("#chk_save_id").prop("checked", false);
+                } else {
+                    $.cookie("savedId", $("#id").val().trim(), {
+                        expires: 7,
+                        path: './'
+                    })
+                }
+            } else {
+                $.removeCookie("savedId", {
+                    path: './'
+                });
+            }
+
+        })
+    </script>
+    
+</body>
+</html>

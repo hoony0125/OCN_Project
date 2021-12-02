@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<title>articledetail</title>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<!-- Core theme CSS (includes Bootstrap)-->
+ <!-- <link href="css/styles.css" rel="stylesheet" />  -->
+ 
+<!-- 아이콘 불러오는 링크 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+<style type="text/css">
+section{
+font-family: 'Montserrat', sans-serif;
+}
+
+#btnRegi{
+margin-top: 20px;
+}
+#btnComment{
+margin-top: 0px;
+float: right;
+color: #007bff;
+}
+#ar{
+font-weight: 520;
+font-size: 2.75rem;
+}
+.codate{
+color: grey;
+font-size: 13px;
+}
+#date{
+font-size: 14px;
+font-style: normal;
+
+}
+
+.CommentBox a {
+    color: turquoise;
+}
+
+.CommentBox .comment_list 
+.comment_area {
+	position: relative;
+	padding: 12px 23px 10px 0;
+}
+
+.CommentBox .comment_list 
+.comment_thumb {
+	position: absolute;
+	top: 12px;
+	left: 0;
+	width: 36px;
+	height: 36px;
+}
+
+.CommentBox .comment_list 
+.comment_box {
+	padding-left: 46px;
+}
+
+.CommentBox .comment_list 
+.CommentItem.CommentItem-reply {
+    padding-left: 46px;
+}
+
+.CommentBox .comment_list 
+.comment_info_box {
+	margin-top: 7px;
+	font-size: 12px;
+	color: #979797;
+}
+
+.CommentBox .comment_list .comment_info_box 
+.comment_info_date {
+	margin-right: 8px;
+}
+
+.CommentBox .comment_list 
+.CommentItem:first-child {
+    border-top: 0;
+} 
+
+.CommentBox .comment_list 
+.CommentItem {
+    position: relative;
+    border-top: 1px solid #dae0e5;
+}
+
+.view-comment {
+
+	color: rgb(51, 51, 51);
+	margin: 3px 12px 0px 0px;
+	padding: 0px 0px 5px;
+	text-transform: capitalize;
+	overflow: hidden;
+	font-size: 20px;
+	font-weight: 500;
+	border-bottom-color: rgb(51, 51, 51);
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	display: inline-block;
+	position: relative;
+}
+
+.fw-bold{
+font-weight: 700 !important;
+font-size: 15px;
+}
+
+.cacontent{
+font-size: 15px;
+margin-bottom: 5px;
+}
+
+.ccacontent{
+font-size: 15px;
+margin-bottom: 3px;
+}
+
+.reply{
+margin: 5px 5px 5px 10px;
+}
+
+.replydel{
+margin: 5px;
+}
+
+.replybtn{
+display: grid;
+justify-content: end;
+font-size: 13px;
+margin-top: 8px;
+}
+
+.rreplydel{
+margin: 5px;
+font-size: 13px;
+}
+
+
+</style>
+</head>
+<body>
+
+<!-- Page content-->
+<section style="padding-bottom: 0px;">
+<div class="container-lg mt-5" style="margin-top: 0px!important; max-width: 1100px;">
+    <div class="col-lg-12" style="max-width: 1100px;">
+        <!-- Post content-->
+        <article style="max-width: 960px;">
+            <!-- Post header-->
+            <header class="mb-5" style="margin-bottom: 1rem!important;">
+            
+            <!-- 제목-->
+            <h1 class="fw-bolder mb-1" id="title" style="margin-top: 10px;color: black;"></h1>
+            
+            <!-- 기사 작성일-->
+            <div class="text-muted fst-normal mb-2" id="date"><span class="material-icons" style="font-size: 11px;">schedule</span>
+            </div>
+            
+            <!-- 카테고리 뱃지-->
+            <a class="badge text-decoration-none link-light" href="#!" id="press" style="background-color: black; color: #fabf02; padding: 5px; font-size: 13px;" ></a>
+            <a class="badge text-decoration-none link-light" href="#!" id="cate" style="background-color: black; color: #fabf02; padding: 5px; font-size: 13px;"></a>
+			
+			<!-- 구분선 -->
+            <hr style="margin-top: 20px; margin-bottom: 7px;">
+            </header>
+            
+            <!-- 사진 -->
+            <figure class="mb-4">
+            <div id="img_in"></div></figure>
+            
+            
+			
+            <!-- 내용-->
+            <section class="mb-5" style="padding-top: 0px; margin-bottom: 0px!important;padding-bottom: 0px;">
+            <!-- tts 버튼 -->
+			<div id="ttsSpace" style="float: right;">
+			<button type="button" id="btnSpeech" class="btn btn-secondary" onclick="speechBtn()" style="padding-top: 10px; margin-left: 10px; border-radius: 50px; background: #fabf02; border-color: white;"><span class="material-icons" style="color: black; ">volume_up</span></button>
+   			<button type="button" id="btnSpeech" class="btn btn-secondary" onclick="window.location.reload()" style="padding-top: 10px; margin-left: 10px; border-radius: 50px; background: #fabf02; border-color: white;" ><span class="material-icons" style="color: black;">pause</span></button>
+			</div>
+                <p class="fs-5 mb-4" id="articleContent" style="font-size: 15px;color: black; margin-bottom: 0px!important;"></p>
+                <hr style="margin-top: 0px;">
+            </section>
+        </article>
+        </div>
+        </div>
+        </section>
+	
+	<!--------------- 댓글 --------------->
+	
+		<!-- comment_title --> 
+		<section style="padding-top: 0px;">
+        <div id="comment" class="container-lg mb-4" style=" max-width: 960px; margin-bottom: 0px!important;"> 
+        <div class="CommentBox">
+			<div class="comment_title" style="position: relative; padding-top: 16px; margin-bottom: 0px;">
+				<h3 class="view-comment">Comments</h3>
+			</div>      
+			
+	
+        <!-- 댓글 리스트 -->
+        <section class="mb-5" style="padding-top: 0px!important; margin-top: 5px;">
+       
+            <div class="card"> <!--  bg-light(뒷배경 회색클래스) -->
+                <div class="card-body">
+                    <div class="mb-4" ">
+                        <!-- Parent comment-->
+                         <div class="ms-3">
+							<ul class='comment_list' style='list-style: none; margin: 0; padding: 0;'>
+								<div id="colist"></div>
+							</ul>
+                        </div>                       			
+                    </div>                    
+                     <!-- comment_input -->         
+	    <div id ="commentexist"></div>
+	    <textarea id="commentinput" placeholder="댓글을 입력해주세요" class="form-control" rows="3"></textarea><br>
+	    <a id="btnComment" href'#' role='button' onclick="commentInput()" style="float: right; color: turquoise">작성완료</a>
+		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+                </div>                                  
+             </div>
+          </div> 
+          
+        </div>              
+	 
+		<br>         
+      </section>
+			
+<br><br><br> 
+
+<!-- 사람 얼굴 아이콘  -->
+<!-- <span class='comment_thumb'><img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77'alt='프로필 사진' width='36' height='36'></span>" -->
+	
+
+<script type="text/javascript">
+
+var seq = sessionStorage.getItem("pickNum");                // let
+var user = localStorage.getItem("login");                   // let
+
+var tts_parts;
+
+// 기사 데이터 화면에 뿌리기
+$.ajax({
+	url:'http://localhost:3000/articlePick',
+	type:'get',
+	data:{ 'seq':seq },
+	success:function(data){
+ 		
+ 		tts_parts = data.voice_parts;
+		data.atitle = "<h1 id=ar>" + data.atitle + "</h1>";
+		$("#title").append( data.atitle );
+		
+		str = '';
+		if(data.afilename != ""){
+			str = "<div id=imageSpace>";
+			str = str + "<img src='" + data.afilename + "'  ></div>";   
+			$("#img_in").append(str);
+		}
+		
+		$("#articleContent").append(data.acontent + "<br><br>");
+		
+$("#date").append( data.aupload );
+		
+		$("#press").append( data.apresscom );
+		
+		ca = '';
+		
+		switch (data.acategory) {
+		case 0:
+			ca = "Business"
+			break;
+		case 1:
+			ca = "Science&Tech"
+			break;
+		case 2:
+			ca = "Health"
+			break;
+		case 3:
+			ca = "Sport"
+			break;
+		}
+		
+		$("#cate").append( ca );
+
+		
+	},
+	error:function(){
+		alert('articlepick error');
+	}
+});
+
+
+// tts
+function speech(txt) {	
+	if(!window.speechSynthesis) {
+		Swal.fire({
+      	   icon: 'error',
+      	   title: '음성 재생을 지원하지 않는 브라우저입니다. 크롬, 파이어폭스 등의 최신 브라우저를 이용하세요',
+		})
+		return;
+	}
+	var lang = 'en-US';
+	var utterThis = new SpeechSynthesisUtterance(txt);
+	utterThis.onend = function (event) {
+		console.log('end');
+	};
+	utterThis.onerror = function(event) {
+		console.log('error', event);
+	};
+	
+	utterThis.lang = lang;
+	utterThis.pitch = 1;
+	utterThis.rate = 0.9; //속도 
+	window.speechSynthesis.speak(utterThis);
+	
+}
+
+
+
+//tts 버튼클릭
+function speechBtn() {	
+	let login = localStorage.getItem("login");
+	
+ if (login == null || logout == null) {
+ 	//alert("로그인하셔야 듣기 서비스를 이용할 수 있습니다.")
+ 	Swal.fire({
+		icon: 'error',
+		title: '아직 회원이 아니시군요!',
+		text: '로그인하셔야 듣기 서비스를 이용할 수 있습니다',
+		footer: '<span style="padding-right: 30px"><a href="login.html">로그인</a></span>' + '<a href="" onclick="register()">회원가입</a>'
+	})
+ } else if (login != null) {
+ 	for(i = 0; i < tts_parts.length; i++){
+ 		speech(tts_parts[i]);
+ 	}
+  }  
+}
+   	
+
+
+var reply_flag = 0;                        	     	//   let
+var comment_flag = 0;                      	     	//   let
+getCommentlist(-1);
+
+
+// 댓글 list
+function getCommentlist(replyseq){
+	
+	let userid = "";
+	if(user != null){
+		userid = JSON.parse(user).id;
+	}
+	let articleseq = seq;
+	$.ajax({
+		url:'http://localhost:3000/allArticleComment',
+		type:"get",
+		data: {'articleseq':articleseq},
+		success:function(list){
+		
+			$("#colist").html("");
+			$.each(list, function (i, item) {
+				if(item.cadel == 0){
+					let str = "";
+					if(item.depth == 0){
+						/* str += "<div class='fw-bold'>"+ item.userid + "</div>";
+						str += "<div class='cacontent'> "+ item.cacontent + "</div>";
+						str += "<div class='codate'> "+ item.caregdate + " <a href'#' role='button' class='reply' onclick='reply(" + item.seq + ")'>답글</a>" + delete_str; */
+						str += "<li class='CommentItem'>";
+						str += "<div class='comment_area'>";
+						str += "<span class='comment_thumb'> <img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></span>";
+						//----------------------------------------------------------------------		
+						str += "<div class='comment_box'>";
+						str += "<div class='comment_nick_box' style='font-weight: 700 !important; font-size: 15px;'>";
+						str += "<div class='comment_nickname'>"+ item.nickname +"</div>";
+						str += "</div>";
+						//-----------------------------------------------------------------------
+						str += "<div class='comment_text_box'>";
+						str += "<p class='comment_text_view' style='margin: 0'>";
+						str += "<span class='text_comment'>"+ item.cacontent +"</span>";
+						str += "</p></div>";
+						//-----------------------------------------------------------------------
+						str += "<div class='comment_info_box'>";
+						str += "<span class='comment_info_date'>"+ item.caregdate +"</span>";
+						str += "<span> <a href'#' role='button' class='reply' onclick='reply(" + item.seq + ")'>답글달기</a></span>";
+						if(item.userid == userid){
+						//	str += "<a href'#' role='button' class='replydel' onclick='delete_comment(" + item.seq + ", " + item.depth + ", "+ item.ref +" )'>삭제</a></div>";
+							str += "<span> <a href'#' role='button' class='replydel' onclick='delete_comment(" + item.seq + ", " + item.depth + ", "+ item.ref +" )'>삭제</a><span></div>";
+						}
+						else{
+						//	delete_str += "</div>";
+							str += "</div>";
+						} 	
+					//	str += "<hr></hr>";
+						//--------------------------------------------------------------------------
+						str += "</div></div></li>";
+					}
+					else{
+						/* 
+						str += "<div class=' bg-light fw-bold'><span class='material-icons'>subdirectory_arrow_right</span>&nbsp;&nbsp;"+ item.userid + "</div>";
+						str += "<div class='ccacontent'> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + item.cacontent + "</div>";
+						str +=  "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"+ item.caregdate + delete_str;
+						if(item.userid == userid){
+							delete_str += "<a href'#' role='button' class='rreplydel' onclick='delete_comment(" + item.seq + ", " + item.depth + ", "+ item.ref +" )'>삭제</a><hr></hr></div>";
+						}
+						else{
+							delete_str += "</div>";
+						} */ 						
+						str += "<li class='CommentItem CommentItem-reply'>";
+						str += "<div class='comment_area'>";
+						//----------------------------------------------------------------------		
+						str += "<div class='comment_box'>";
+						str += "<span class='comment_thumb'> <img src='https://ssl.pstatic.net/static/cafe/cafe_pc/default/cafe_profile_77.png?type=c77_77' alt='프로필 사진' width='36' height='36'></span>";
+						str += "<div class='comment_nick_box'>";
+						str += "<div class='comment_nickname' style='font-weight: 700 !important; font-size: 15px;'>" + item.nickname + "</div>";
+						str += "</div>";
+						//-----------------------------------------------------------------------
+						str += "<div class='comment_text_box'>";
+						str += "<p class='comment_text_view' style='margin: 0'>";
+						str += "<span class='text_comment'>" + item.cacontent + "</span></p>";
+						str += "</div>";
+						//-----------------------------------------------------------------------
+						str += "<div class='comment_info_box'>";
+						str += "<span class='comment_info_date'>"+ item.caregdate +"</span>";
+						if(item.userid == userid){
+							str += "<a href'#' role='button' class='replydel' onclick='delete_comment(" + item.seq + ", " + item.depth + ", "+ item.ref +" )'>삭제</a></div></div>";
+						}
+						else{
+							str += "</div></div>";
+						}
+						//--------------------------------------------------------------------------
+						str += "</div></div></li>";	
+				}   
+				//	str += "</tr>";
+					
+					$("#colist").append(str);
+					
+					if(replyseq == item.seq){
+						let replytext = "";
+						replytext += '<textarea id="replyinput" class="form-control" rows="3" placeholder="답글을 입력해주세요"></textarea>'
+						replytext += "<a href'#' role='button' id='btnReply' class='replybtn' onclick='replyRegi(" + item.seq + ")'>등록</a>";      
+						$("#colist").append(replytext);
+					}
+				}
+			})
+		},
+		error:function(){
+			alert("commentlist error");
+		}
+	});	
+}
+
+// 답글 달기 버튼
+function reply( parentseq ){
+	
+	if(reply_flag == parentseq){
+		reply_flag = -2;
+		parentseq = -1;	
+	}
+	else{
+		reply_flag = parentseq;
+	}
+	
+	getCommentlist( parentseq );	
+}
+
+
+// 삭제 버튼
+function delete_comment(comment_seq, depth, ref)
+{
+	
+	if(user != null){	
+		
+		let userid = JSON.parse(user).id;                             
+		let articleseq = seq;
+		
+		$.ajax({
+			url:'http://localhost:3000/ArticleCmtDelete',
+			type:'get',
+			data:{ 'seq':comment_seq, 'depth':depth, 'ref':ref, 'articleseq':articleseq }, 
+			success:function(data){
+		 		// alert('등록완료');
+		 		getCommentlist(-1);
+		 		reply_flag = -2; // 답글작성 완료시
+			},
+			error:function(){
+				alert('delete error');
+			}
+		});
+			 
+	}else{
+		alert("user is null");
+	}
+}
+
+// 작성완료 버튼 : 답글 insert
+function replyRegi( parentseq )
+{
+	if(user != null){	
+		
+		let userid = JSON.parse(user).id;                             
+		let nickname = JSON.parse(user).nickname;                             
+		let cacontent = $("#replyinput").val();
+		
+		cacontent = cacontent.trim();
+		// alert(cacontent);
+		let articleseq = seq;
+		if(cacontent != ""){ 
+	 		
+			$.ajax({
+				url:'http://localhost:3000/ArticleReplyInsert',
+				type:'get',
+				data:{ 'seq':parentseq, 'userid':userid, 'nickname':nickname, 'cacontent':cacontent, 'articleseq':articleseq }, 
+				success:function(data){
+			 		// alert('등록완료');
+			 		getCommentlist(-1);
+			 		reply_flag = -2; // 답글작성 완료시
+				},
+				error:function(){
+					alert('replyinput error');
+				}
+			});
+			  
+		}else{
+			Swal.fire({
+         		icon: 'error',
+            	title: '댓글을 입력하세요',
+        	})
+		}
+		
+	}else{
+		Swal.fire({
+			icon: 'error',
+			title: '아직 회원이 아니시군요!',
+			text: '로그인 후 여러분의 의견을 남겨주세요',
+			footer: '<span style="padding-right: 30px"><a href="login.html">로그인</a></span>' + '<a href="" onclick="register()">회원가입</a>'
+		})
+	}
+}
+
+
+// 댓글 등록 버튼
+function commentRegi(){
+	
+	if(comment_flag == 0){
+		
+		let commentexist = '<textarea id="commentinput" placeholder="댓글을 입력해주세요" class="form-control" rows="3"></textarea>';
+		$("#commentexist").append(commentexist);
+		
+		let buttons = '<button type="button" id="btnComment" class="btn btn-secondary" onclick="commentInput()">작성완료</button>'; 
+		$("#buttons").append(buttons);
+		 
+		comment_flag = 1;
+	}
+	else{
+		$("#commentexist").empty();
+	    $("#btnComment").remove();
+	    comment_flag = 0;
+	}
+}
+
+// 댓글 insert
+function commentInput(){
+	
+	if(user != null){	
+		
+		let userid = JSON.parse(user).id;                             
+		let nickname = JSON.parse(user).nickname;                             
+		let cacontent = $("#commentinput").val();
+		
+		cacontent = cacontent.trim();
+		// alert(cacontent);
+		let articleseq = seq;
+		
+		if(cacontent != ""){ 
+			
+			$.ajax({
+				url:'http://localhost:3000/ArticleCommentInsert',
+				type:'get',
+				data:{ 'userid':userid, 'nickname':nickname, 'cacontent':cacontent, 'articleseq':articleseq }, 
+				success:function(data){
+			 		// alert('등록완료');
+			 		$('#commentinput').val('');
+			 		getCommentlist(-1);
+				},
+				error:function(){
+					alert('commentinput error');
+				}
+			});
+		}else{
+			alert("댓글을 입력하세요");
+		}
+		
+	}else{
+		Swal.fire({
+			icon: 'error',
+			title: '아직 회원이 아니시군요!',
+			text: '로그인 후 여러분의 의견을 남겨주세요',
+			footer: '<span style="padding-right: 30px"><a href="login.html">로그인</a></span>' + '<a href="" onclick="register()">회원가입</a>'
+		})
+	}
+}
+
+</script>
+</body>
+</html>
+
+
+

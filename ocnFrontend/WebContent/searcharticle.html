@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Detail</title>
+    <!-- 확인 -->
+    <script type="text/javascript" src="page/jquery.twbsPagination.min.js"></script>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="col-sm-offset-1 col-sm-3" style="flex:1 1 100px; font-size: 40px;  margin-left: -8px; ">
+            All News</div>
+
+        <table class="table table-hover" style="font-size: 16px;">
+            <col width="80px">
+            <col width="800px">
+            <col width="180px">
+            <col width="80px">
+            <thead>
+                <tr>
+                    <th style="text-align: center">번호</th>
+                    <th style="text-align: center">제목</th>
+                    <th style="text-align: center">작성일</th>
+                    <th style="text-align: center">조회수</th>
+                </tr>
+            </thead>
+
+            <!-- 테이블 내용 -->
+            <tbody id="articlelist">
+            </tbody>
+        </table>
+        <br>
+
+        <!-- 페이징 -->
+        <div class="container">
+            <nav aria-label="Page navigation">
+                <ul class="pagination" id="pagination" style="justify-content:center"></ul>
+            </nav>
+        </div>
+
+
+    </div>
+    </div>
+
+
+    <script type="text/javascript">
+        getarticle(0);
+
+        //리스트 가져오기, 반환된 리스트 출력
+        function getarticlelist(page, total) {
+
+            let titleSearch = sessionStorage.getItem("titleSearch");
+
+            $.ajax({
+                url: 'http://localhost:3000/mainsearch',
+                type: "get",
+                data: {
+                    'choice': 'title',
+                    'search': titleSearch,
+                    'page': page
+                },
+                success: function(list) {
+
+                    $("#articlelist").html("");
+                    $.each(list, function(i, item) {
+
+                        if (item.atitle.length > 90) {
+                            item.atitle = item.atitle.substring(0, 90) + "...";
+                        }
+
+                        let comment_num = "";
+                        if (item.comment_num > 0) {
+                            comment_num = "&nbsp[" + item.comment_num + "]";
+                        }
+                    	
+                    	
+                        let str = "<tr>";
+                        str += "<td align='center'>" + (total - ((page * 10) + i)) + "</td>";
+                        str += "<td>" + "<a href='#' onclick='articledetail(" + item.seq + ")'><font color= '#003772'>" + item.atitle + " </font></a> " + comment_num + "</td>"
+                        str += "<td align='center'>" + item.aupload + "</td>";
+                        str += "<td align='center'>" + item.areadcount + "</td>";
+                        str += "</tr>";
+
+
+                        $("#articlelist").append(str);
+                    })
+                },
+                error: function() {
+                    alert("list error");
+                }
+            });
+        }
+
+        function articledetail(seq) {
+            $.ajax({
+                url: "articledetail.html",
+                success: function(resp) {
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "articledetail");
+            sessionStorage.setItem("pickNum", seq);
+        }
+
+
+        function getarticle(page) {
+            let total = getarticlecount();
+            getarticlelist(page, total);
+        }
+
+
+        //기사 총수를 취득 - 페이징
+        function getarticlecount() {
+
+            let titleSearch = sessionStorage.getItem("titleSearch");
+            let totalCount = 0;
+            $.ajax({
+                url: "http://localhost:3000/mainsearchCount",
+                type: "get",
+                async: false,
+                data: {
+                    'choice': 'title',
+                    'search': titleSearch,
+                    'page': 0
+                },
+                success: function(count) {
+                    //alert("articlecount : " + count);
+                    loadPage(count);
+                    totalCount = count;
+                },
+                error: function() {
+                    alert("count error");
+                }
+            });
+            return totalCount;
+        }
+
+
+        //페이징
+        function loadPage(totalCount) {
+            let pageSize = 10; // 페이지의 크기
+
+            let _totalPages = totalCount / 10;
+            if (totalCount % 10 > 0) {
+                _totalPages++;
+            }
+
+            // 페이지 갱신
+            $("#pagination").twbsPagination('destroy');
+
+            $("#pagination").twbsPagination({
+                startPage: 1,
+                totalPages: _totalPages,
+                visiblePages: 10,
+                first: '<span sris-hidden="true">«</span>',
+                prev: "이전",
+                next: "다음",
+                last: '<span sris-hidden="true">»</span>',
+                initiateStartPageClick: false, // onPageClick 자동호출이 되도록 하지 않는다
+                onPageClick: function(event, page) { // 페이지 번호를 클릭
+
+                    getarticlelist(page - 1, totalCount); // 0 1 2 3
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

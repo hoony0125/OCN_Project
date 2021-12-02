@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+
+    <style type="text/css">
+        #imageSpace img {
+            display: block;
+            object-fit: cover;
+            width: 280px;
+            height: 179px;
+
+        }
+
+        .news-block h2 {
+            color: #141517;
+            margin-top: 6px;
+            margin-bottom: 5px;
+            font-size: 17px;
+            font-weight: 400;
+            line-height: 23px;
+        }
+
+        .news-block a {
+            color: black;
+            text-decoration-line: none;
+            text-decoration-thickness: initial;
+            text-decoration-style: initial;
+            text-decoration-color: initial;
+        }
+
+        .news-block a:hover {
+            color: black;
+            text-decoration: none;
+        }
+
+        #hotimage img {
+            width: 810px;
+            height: 437px;
+            display: block;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="Popular-news">
+        <div class="container" style="max-width: 1240px;">
+            <h3>
+                <div class="heading-large">Popular news</div>
+            </h3>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="carousel-item active" id="hotlist0">
+                        <!-- <img class="img-fluid"> -->
+                        <div class="carousel-caption">
+                            <div class="news-title">
+                                <h2 class=" title-large" id="hottitle0"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Item -->
+
+                    <div class="carousel-item" id="hotlist1">
+                        <div class="carousel-caption">
+                            <div class="news-title">
+                                <h2 class=" title-large" id="hottitle1"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Item -->
+
+                    <div class="carousel-item" id="hotlist2">
+                        <div class="carousel-caption">
+                            <div class="news-title">
+                                <h2 class=" title-large" id="hottitle2"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Item -->
+
+                    <div class="carousel-item" id="hotlist3">
+                        <div class="carousel-caption">
+                            <div class="news-title">
+                                <h2 class=" title-large" id="hottitle3"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Item -->
+
+                    <div class="carousel-item" id="hotlist4">
+                        <div class="carousel-caption">
+                            <div class="news-title">
+                                <h2 class=" title-large" id="hottitle4"></h2>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Item -->
+
+                </div>
+                <!-- End Carousel Inner -->
+
+                <ul class="list-group col-sm-4">
+                    <li data-target="#myCarousel" data-slide-to="0" class="list-group-item active">
+                        <h4 style="padding-top: 9px;" id="hotsubtitle0"></h4>
+                    </li>
+                    <li data-target="#myCarousel" data-slide-to="1" class="list-group-item">
+                        <h4 style="padding-top: 9px;" id="hotsubtitle1"></h4>
+                    </li>
+                    <li data-target="#myCarousel" data-slide-to="2" class="list-group-item">
+                        <h4 style="padding-top: 9px;" id="hotsubtitle2"></h4>
+                    </li>
+                    <li data-target="#myCarousel" data-slide-to="3" class="list-group-item">
+                        <h4 style="padding-top: 9px;" id="hotsubtitle3"></h4>
+                    </li>
+                    <li data-target="#myCarousel" data-slide-to="4" class="list-group-item">
+                        <h4 style="padding-top: 9px;" id="hotsubtitle4"></h4>
+                    </li>
+                </ul>
+
+                <!-- Controls -->
+                <div class="carousel-controls"> <a class="left carousel-control" href="#myCarousel" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left"></span> </a> <a class="right carousel-control" href="#myCarousel" data-slide="next"> <span class="glyphicon glyphicon-chevron-right"></span> </a> </div>
+            </div>
+            <!-- End Carousel  -->
+        </div>
+    </div>
+
+    <!---------------- 카테고리별 기사 ---------------->
+    <!-- 경제 기사 시작 -->
+
+    <section class="section-01">
+        <div class="container" style="max-width: 1275px;">
+            <div class="col-lg-8 col-md-12" style="max-width: 100%;">
+                <h3 class="heading-large">Business<a class="example-image-link" href="#" onclick="categoryarticlecat(0)" style="text-align: right; float: right; font-weight:20; margin-bottom: 0px; font-size: 11.5px; color: black;">more+</a> </h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="business0"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="business1"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="business2"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="business3"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- 과학/기술 기사 시작 -->
+    <section class="section-01">
+        <div class="container" style="max-width: 1275px;">
+            <div class="col-lg-8 col-md-12" style="max-width: 100%;">
+                <h3 class="heading-large">Science&Tech<a class="example-image-link" href="#" onclick="categoryarticlecat(1)" style="text-align: right; float: right; font-weight:20; margin-bottom: 0px; font-size: 11.5px; color: black;">more+</a> </h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="tech0"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="tech1"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="tech2"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="tech3"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- 건강 기사 시작 -->
+    <section class="section-01">
+        <div class="container" style="max-width: 1275px;">
+            <div class="col-lg-8 col-md-12" style="max-width: 100%;">
+                <h3 class="heading-large">Health<a class="example-image-link" href="#" onclick="categoryarticlecat(2)" style="text-align: right; float: right; font-weight:20; margin-bottom: 0px; font-size: 11.5px; color: black;">more+</a> </h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="health0"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="health1"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="health2"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="health3"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- 스포츠 기사 시작 -->
+    <section class="section-01">
+        <div class="container" style="max-width: 1275px;">
+            <div class="col-lg-8 col-md-12" style="max-width: 100%;">
+                <h3 class="heading-large">Sport<a class="example-image-link" href="#" onclick="categoryarticlecat(2)" style="text-align: right; float: right; font-weight:20; margin-bottom: 0px; font-size: 11.5px; color: black;">more+</a> </h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="sport0"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="sport1"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="sport2"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="news-block">
+                            <div id="sport3"> </div>
+
+                            <div> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+
+    <script type="text/javascript">
+        // alert("home");
+
+        getArticlelist(0);
+        getArticlelist(1);
+        getArticlelist(2);
+        getArticlelist(3);
+
+        // 리스트 가져오기, 반환된 리스트 출력 
+        function getArticlelist(catelist) {
+            $.ajax({
+                url: 'http://localhost:3000/catelist',
+                type: "get",
+                data: {
+                    'category': catelist
+                },
+                success: function(list) {
+
+                    let id = "";
+                    if (catelist == 0) {
+                        id = "#business";
+                    } else if (catelist == 1) {
+                        id = "#tech";
+                    } else if (catelist == 2) {
+                        id = "#health";
+                    } else if (catelist == 3) {
+                        id = "#sport";
+                    }
+
+
+                    $.each(list, function(i, item) {
+                        let banner = id + i;
+
+                        let str = "";
+                        // str += "<a href='articledetail.html?seq=" + item.seq + "'>" + item.atitle + "</a><br><br>";
+
+                        if (item.afilename != "") {
+                            let img = "";
+                            img = "<div id=" + '"imageSpace">';
+                            img = img + "<a href='#' onclick='articledetail(" + item.seq + ")'><img src='" + item.afilename + "'  ></a></div>";
+                            $(banner).append(img);
+                        }
+
+                        str += "<h2><a href='#' onclick='articledetail(" + item.seq + ")'>" + item.atitle + "</a></h2>";
+                        $(banner).append(str);
+
+                    })
+                },
+                error: function() {
+                    alert("list error");
+                }
+            });
+        }
+
+        function articledetail(seq) {
+            $.ajax({
+                url: "articledetail.html",
+                success: function(resp) {
+                    $("#content").html(resp);
+                }
+            });
+            sessionStorage.setItem("nowPage", "articledetail");
+            sessionStorage.setItem("pickNum", seq);
+        }
+
+
+
+        // 카테고리 이동
+        function categoryarticlecat(category) {
+            $.ajax({
+                url: "categories/categoryarticlelist.html",
+                success: function(resp) {
+                    // alert(resp);		
+                    $("#content").html(resp);
+                },
+                error: function() {
+                    alert("home error");
+                }
+            });
+            sessionStorage.setItem("category", category);
+            sessionStorage.setItem("nowPage", "categorylist");
+
+        }
+
+
+        // 인기글 배너
+
+        getHotList();
+
+        function getHotList() {
+            $.ajax({
+                url: 'http://localhost:3000/hotlistAll',
+                type: "get",
+                success: function(list) {
+                    $("#hotlist").html("");
+                    let id = ""; // 변경
+                    id = "#hotlist"; // 변경
+                    $.each(list, function(i, item) {
+                        let banner = id + i; // 변경
+                        str = "";
+                        if (list.afilename != "") {
+                            img = '';
+                            img = "<div id=" + '"hotimage">';
+                            img = img + "<img src='" + item.afilename + "' ></div>";
+                            $(banner).append(img); // 변경
+                        }
+
+                        let title = "#hottitle" + i;
+                        str += "<a href='#' onclick='articledetail(" + item.seq + ")'>" + item.atitle + "</a>";
+                        $(title).append(str); // 변경
+
+                        let subtitle = "#hotsubtitle" + i;
+                        sub = "<h4>" + item.atitle + "</h4>";
+                        $(subtitle).append(sub); // 변경
+                    })
+                },
+                error: function() {
+                    alert('error');
+                }
+            });
+
+        }
+    </script>
+
+
+
+</body>
+
+</html>

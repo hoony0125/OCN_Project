@@ -1,0 +1,171 @@
+<!-- summernote -->
+<script src="js/summernote/summernote-lite.js"></script>
+<script src="js/summernote/lang/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="css/summernote/summernote-lite.css">
+
+<style>
+    .WritingHeader {
+        /* position: relative; */
+        margin-top: 20px;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #323232;
+        width: 1000px;
+        margin-left: 452px;
+    }
+
+    .WritingContent {
+        /* position: relative; */
+        padding-top: 12px;
+        padding-bottom: 50px;
+        margin-left: 452px;
+    }
+
+</style>
+<div id="app">
+    <section>
+        <div class="WritingWrap">
+            <div class="WritingHeader">
+                <h2>게시글 수정</h2>
+            </div>
+            <div class="WritingContent">
+                <form id="frm">
+                    <div style="width: 1000px">
+
+                        <input type="hidden" id="userid" name="userid" size="50px" readonly="readonly">
+                        <input type="hidden" id="nickname" name="nickname" size="50px" readonly="readonly">
+                        <input type="text" class="form-control" id="btitle" name="btitle" value="abc" size="50px">
+                        <br>
+                        <textarea id="summernote" class="summernote" name="bcontent"></textarea><br><br>
+                        <table align="center">
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <button type="button" id="btn" class="btn btn-secondary">작성완료</button>
+                                </td>
+                                <td colspan="2" align="center">
+                                    <button type="button" id="canclebtn" class="btn btn-secondary">취소</button>
+                                </td>
+                            </tr>
+                        </table>
+                        <br>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            // 에디터 높이
+            height: 500,
+            // 에디터 한글 설정
+            lang: "ko-KR",
+            // 에디터에 커서 이동 (input창의 autofocus라고 생각하시면 됩니다.)
+            focus: true,
+            toolbar: [
+                // 글꼴 설정
+                ['fontname', ['fontname']],
+                // 글자 크기 설정
+                ['fontsize', ['fontsize']],
+                // 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+                ['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+                // 글자색
+                ['color', ['forecolor', 'color']],
+                // 표만들기
+                ['table', ['table']],
+                // 글머리 기호, 번호매기기, 문단정렬
+                ['para', ['ul', 'ol', 'paragraph']],
+                // 줄간격
+                ['height', ['height']],
+                // 그림첨부, 링크만들기, 동영상첨부
+                ['insert', ['picture', 'link', 'video']],
+                // 코드보기, 확대해서보기, 도움말
+                ['view', ['codeview', 'fullscreen', 'help']]
+            ],
+            // 추가한 글꼴
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋음체', '바탕체'],
+            // 추가한 폰트사이즈
+            fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
+        });
+    });
+    url = new URL(location.href);
+    urlParams = url.searchParams;
+    seq = urlParams.get("seq");
+    //	const url = new URL(location.href);
+    //	const urlParams = url.searchParams;
+    //	const seq = urlParams.get("seq");
+    //	alert(seq);
+
+    /* 	$("#nickname").val();
+    	$("#btitle").val();
+    	$("#bcontent").val(); */
+    $.ajax({
+        url: 'http://localhost:3000/bbs/bbsdetail',
+        type: 'get',
+        data: {
+            'seq': bbsseq
+        },
+        success: function(data) {
+            //	$("#nickname").val(data.nickname);
+            $("#userid").val(data.userid);
+            $("#nickname").val(data.nickname);
+            $("#btitle").val(data.btitle);
+            //	$('#summernote').summernote('editor.insertText', data.bcontent);
+            $("#summernote").summernote('code', data.bcontent);
+        },
+        error: function() {
+            alert('error');
+        }
+    });
+
+        $("#btn").click(function() {
+
+            var userid = $("#userid").val();
+            var bbsnickname = $("#nickname").val();
+            var bbstitle = $("#btitle").val();
+            var bbscontent = $("#summernote").val();
+
+            $.ajax({
+                url: "http://localhost:3000/bbs/bbsupdate",
+                type: "get",
+                data: {
+                    'seq': bbsseq,
+                    'userid': userid,
+                    'nickname': bbsnickname,
+                    'btitle': bbstitle,
+                    'bcontent': bbscontent
+                },
+                success: function(resp) {
+                    //	alert('success');
+
+                    if (resp == "OK") {
+                        //alert('글을 변경했습니다');
+                        Swal.fire({
+                     		icon: 'success',
+                        	title: '글을 변경했습니다'
+                    	});
+                    } else {
+                        //alert('글이 변경되지 않았습니다');
+                        Swal.fire({
+                     		icon: 'error',
+                        	title: '글이 변경되지 않았습니다'
+                    	});
+                    }
+                    bbsdetail(bbsseq);
+                },
+                error: function() {
+                    alert('error');
+                }
+            });
+        });
+
+    $("#canclebtn").click(function() {
+
+        $.ajax({
+            url: "bbs/bbsdetail.html",
+            success: function(resp) {
+                $("#content").html(resp);
+            }
+        });
+    });
+</script>
